@@ -1,38 +1,53 @@
-
 "use client"; // Add this at the very top of the file
 
-
 import { Card } from "@/components/ui/card";
-import Map from "@/components/ui/map";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+  Annotation,
+  ZoomableGroup,
+} from "react-simple-maps";
+import { Switch } from "@/components/ui/switch";
+import ReactTooltip from "react-tooltip";
+import React, { useState } from "react";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
 export default function Home() {
+  const [content, setContent] = useState("");
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <Card className="w-full max-w-xl p-6">
-        <h1 className="text-2xl font-bold text-center mb-6">Interactive World Map</h1>
-        <p className="text-center text-gray-600 mb-4">Click on any country to see its name</p>
-        {/* <Map /> */}
-        <ComposableMap >
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="#EAEAEC"
-                  stroke="#D6D6DA"
-                  style={{
-                    default: { outline: "none" },
-                    hover: { fill: "#F53" },
-                    pressed: { fill: "#E42" },
-                  }}
-                />
-              ))
-            }
-          </Geographies>
+        <Switch />
+        <h1 className="text-2xl font-bold text-center mb-6">
+          Unsure what to cook? Let recipe for sucess inspire your next meal from
+          any country in the world
+        </h1>
+        <p className="text-center text-gray-600 mb-4">Select a country</p>
+
+        <ComposableMap data-tip="">
+          <ZoomableGroup zoom={1}>
+            {" "}
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill="#EAEAEC"
+                    stroke="#D6D6DA"
+                    style={{
+                      default: { outline: "none" },
+                      hover: { fill: "#F53" },
+                      pressed: { fill: "#E42" },
+                    }}
+                  />
+                ))
+              }
+            </Geographies>
+          </ZoomableGroup>
         </ComposableMap>
       </Card>
     </main>
