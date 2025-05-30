@@ -5,26 +5,46 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  Marker,
-  Annotation,
   ZoomableGroup,
 } from "react-simple-maps";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
 
-const markers = [
-  {
-    markerOffset: -15,
-    name: "Sau Paulo",
-    coordinates: [-58.3016,-34.6037],
-  }
-]
+
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
 export default function Home() {
   const [content, setContent] = useState<string>("");
+  const [recipe, setRecipe] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleCountryClick = async (countryName: string) => {
+    setIsLoading(true)
+    try {
+
+  
+      const response = await fetch("/api/updateRecipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({country: countryName})
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch recipe');
+      }
+      const data = await response.json()
+      setRecipe(data.recipe)
+    }
+    catch (error) {
+      console.error(error)
+      setRecipe("Failed to load recipe. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  } 
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <Card className="w-full max-w-xl p-6">
@@ -33,8 +53,7 @@ export default function Home() {
           Unsure what to cook? Let recipe for sucess inspire your next meal from
           any country in the world
         </h1>
-        <h1>{content}</h1>
-        <p className="text-center text-gray-600 mb-4">Select a country</p>
+        <p className="text-center text-gray-600 mb-4">{content}</p>
         <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>{content}</Tooltip>
 
         <ComposableMap data-tip="">
@@ -52,6 +71,9 @@ export default function Home() {
                   onMouseLeave={() =>{
                     setContent("")
                   }}
+                  onClick={() => {
+                    handleCountryClick(geo.properties.name);
+                  }}
                     key={geo.rsmKey}
                     geography={geo}
                     fill="#EAEAEC"
@@ -65,6 +87,7 @@ export default function Home() {
                 ))
               }
             </Geographies>
+            
             {/* {markers.map({name, coordinates, markerOffset})} */}
      
           </ZoomableGroup>
