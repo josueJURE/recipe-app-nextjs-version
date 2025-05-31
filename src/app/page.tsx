@@ -10,6 +10,9 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
+import Fieldset from "@/components/ui/fieldset"
+
+import { Suspense } from "react";
 
 
 
@@ -49,12 +52,16 @@ export default function Home() {
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <Card className="w-full max-w-xl p-6">
         <Switch />
+       
         <h1 className="text-2xl font-bold text-center mb-6">
           Unsure what to cook? Let recipe for sucess inspire your next meal from
           any country in the world
         </h1>
         <p className="text-center text-gray-600 mb-4">{content}</p>
         <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>{content}</Tooltip>
+        <Fieldset/>
+     
+     
 
         <ComposableMap data-tip="">
           <ZoomableGroup zoom={1}>
@@ -92,6 +99,7 @@ export default function Home() {
      
           </ZoomableGroup>
         </ComposableMap>
+        <p>{recipe}</p>
       </Card>
     </main>
   );
