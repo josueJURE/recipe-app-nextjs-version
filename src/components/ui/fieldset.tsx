@@ -24,7 +24,7 @@ function Fieldset() {
       <div className="flex flex-row gap-6">
         {dietaryRequirements.map((requirement, index) =>
           requirement.question === "Other?" ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3" key={index}>
               <Checkbox
                 checked={input}
                 onCheckedChange={() => {
@@ -35,7 +35,7 @@ function Fieldset() {
               {input && <Input />}
             </div>
           ) : (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3" key={index}>
               {" "}
               <Checkbox />
               <Label htmlFor="terms">lactose intolerant?</Label>
