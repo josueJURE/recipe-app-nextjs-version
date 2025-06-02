@@ -70,6 +70,7 @@ export default function Home() {
               {({ geographies }) =>
                 geographies.map((geo) => (
                   <Geography
+                   pointerEvents="auto"
                   onMouseEnter={()=> {
                     const NAME = geo.properties.name;
                     console.log("countries name;", geo.properties.name)
@@ -90,6 +91,7 @@ export default function Home() {
                       hover: { fill: "#F53" },
                       pressed: { fill: "#E42" },
                     }}
+                
                   />
                 ))
               }
