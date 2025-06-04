@@ -11,6 +11,8 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
 import Fieldset from "@/components/ui/fieldset"
+import { useTheme } from "@/context/theme-context";
+
 
 import { Suspense } from "react";
 
@@ -22,8 +24,10 @@ export default function Home() {
   const [content, setContent] = useState<string>("");
   const [recipe, setRecipe] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isDarkMode } = useTheme();
 
   const handleCountryClick = async (countryName: string) => {
+
     setIsLoading(true)
     try {
 
@@ -84,8 +88,9 @@ export default function Home() {
                   }}
                     key={geo.rsmKey}
                     geography={geo}
-                    fill="#EAEAEC"
-                    stroke="#D6D6DA"
+                    fill={isDarkMode ? "#374151" : "#EAEAEC"}
+                    stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
+  
                     style={{
                       default: { outline: "none" },
                       hover: { fill: "#F53" },
