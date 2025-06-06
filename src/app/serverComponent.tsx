@@ -22,4 +22,4 @@ const openai = new OpenAI({
     stream: true,
   });
 
-  console.log(stream)
+  console.log("stream")

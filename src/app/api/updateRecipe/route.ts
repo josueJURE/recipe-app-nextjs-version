@@ -5,16 +5,19 @@ const openai = new OpenAI({
   apiKey: process.env.openaiAPI,
 });
 
+const dummyVar = "England"
+
 export async function POST(request: Request) {
   try {
-    const { country } = await request.json();
-    console.log("Received request for country:", country);
+    const  { countrySelected, dietaryRequirements } = await request.json();
+    console.log("countrySelected:", countrySelected);
+    console.log("dietaryRequirements:", dietaryRequirements);
     
     const response = await openai.chat.completions.create({
       messages: [
         {
           role: "user",
-          content: `Give me a traditional recipe from ${country}. Include ingredients and step-by-step instructions.`,
+          content: `Give me a traditional recipe from ${countrySelected}. Include ingredients and step-by-step instructions.`,
         },
       ],
       model: "gpt-3.5-turbo",
