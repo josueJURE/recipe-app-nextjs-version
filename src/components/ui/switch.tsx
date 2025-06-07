@@ -11,7 +11,7 @@ function Switch({
   className,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-  const [isSwitchOn, setIsSwitchOn] = useState<boolean>(true);
+
   const {isDarkMode, toggleDarkMode} = useTheme()
   // function handleDarkMode(): void {
   //   setIsSwitchOn((prev) => !prev);

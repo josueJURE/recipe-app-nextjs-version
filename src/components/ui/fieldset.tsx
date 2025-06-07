@@ -13,7 +13,8 @@ const dietaryRequirements = [
 ];
 
 interface FieldsetProps {
-  onDietaryChange: (data: {vegan: boolean; other: {checked: boolean; text: string}}) => void
+  onDietaryChange: (data: {vegan: boolean; other: {checked: boolean; text: string}}) => void,
+
 }
 
 
@@ -50,7 +51,7 @@ function Fieldset({onDietaryChange} : FieldsetProps) {
 
 
   return (
-    <fieldset aria-label="allergies section" className="allergies">
+    <fieldset aria-label="allergies section" className="allergies align-self: flex-start" >
       <legend>Indicate any dietary requirements</legend>
       <div className="flex flex-row gap-6">
         <div className="flex items-center gap-3">

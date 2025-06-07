@@ -75,7 +75,11 @@ export default function Home() {
   
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
-      <form className="w-full max-w-xl p-6" onSubmit={handleSubmit}>
+      <form className="w-full max-w-xl p-6 	"  onSubmit={handleSubmit}>
+
+        <div className="flex flex-col items-center w-full">
+
+    
         <Switch />
 
         <h1 className="text-2xl font-bold text-center mb-6">
@@ -126,6 +130,7 @@ export default function Home() {
         <p>{recipe}</p>
         <Button type="submit">Submit</Button>
         {/* <button type="submit">Submit</button> */}
+        </div>
       </form>
     </main>
   );
