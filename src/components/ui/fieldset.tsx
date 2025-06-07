@@ -13,22 +13,29 @@ const dietaryRequirements = [
 ];
 
 interface FieldsetProps {
-  onDietaryChange: (data: {vegan: boolean; other: {checked: boolean; text: string}}) => void,
-
+  onDietaryChange: (data: {
+    vegan: boolean;
+    other: { checked: boolean; text: string };
+  }) => void;
+  resetKey: number;
 }
 
-
-
-function Fieldset({onDietaryChange} : FieldsetProps) {
+function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
   const [veganChecked, setVeganChecked] = useState<boolean>(false);
   const [otherChecked, setOtherChecked] = useState<boolean>(false);
   const [otherText, setOtherText] = useState<string>("");
+
+  React.useEffect(() => {
+    setVeganChecked(false);
+    setOtherChecked(false);
+    setOtherText("");
+  }, [resetKey]);
 
   function handleVeganChange(checked: boolean) {
     setVeganChecked(checked);
     onDietaryChange({
       vegan: checked,
-      other: { checked: otherChecked, text: otherText }
+      other: { checked: otherChecked, text: otherText },
     });
   }
 
@@ -36,7 +43,7 @@ function Fieldset({onDietaryChange} : FieldsetProps) {
     setOtherChecked(checked);
     onDietaryChange({
       vegan: veganChecked,
-      other: { checked, text: otherText }
+      other: { checked, text: otherText },
     });
   }
 
@@ -45,13 +52,15 @@ function Fieldset({onDietaryChange} : FieldsetProps) {
     setOtherText(text);
     onDietaryChange({
       vegan: veganChecked,
-      other: { checked: otherChecked, text }
+      other: { checked: otherChecked, text },
     });
   }
 
-
   return (
-    <fieldset aria-label="allergies section" className="allergies align-self: flex-start" >
+    <fieldset
+      aria-label="allergies section"
+      className="allergies align-self: flex-start"
+    >
       <legend>Indicate any dietary requirements</legend>
       <div className="flex flex-row gap-6">
         <div className="flex items-center gap-3">
@@ -61,7 +70,7 @@ function Fieldset({onDietaryChange} : FieldsetProps) {
           />
           <Label htmlFor="vegan">Vegan?</Label>
         </div>
-        
+
         <div className="flex items-center gap-3">
           <Checkbox
             checked={otherChecked}
@@ -73,8 +82,6 @@ function Fieldset({onDietaryChange} : FieldsetProps) {
       </div>
     </fieldset>
   );
-
-
 }
 
 export default Fieldset;
