@@ -86,22 +86,6 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
             {(otherChecked && checkBox.label === "Other?") && <Input onChange={handleUserInput} />}
           </div>
         ))}
-        {/* <div className="flex items-center gap-3">
-          <Checkbox
-            checked={veganChecked}
-            onCheckedChange={(checked) => handleVeganChange(checked as boolean)}
-          />
-          <Label htmlFor="vegan">Vegan?</Label>
-        </div> */}
-
-        {/* <div className="flex items-center gap-3">
-          <Checkbox
-            checked={otherChecked}
-            onCheckedChange={(checked) => handleOtherChange(checked as boolean)}
-          />
-          <Label htmlFor="other">Other?</Label>
-          {otherChecked && <Input onChange={handleUserInput} />}
-        </div> */}
       </div>
     </fieldset>
   );
