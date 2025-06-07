@@ -30,7 +30,7 @@ export default function Home() {
     other: { checked: boolean; text: string };
   }) => {
     setDietaryData(data);
-    console.log(data);
+    console.log("data:", data);
   };
 
   const [recipe, setRecipe] = useState<string>("");
@@ -64,6 +64,11 @@ export default function Home() {
       }
       const data = await response.json();
       setRecipe(data.recipe);
+      setDietaryData(({
+        vegan: false,
+        other: { checked: false, text: "" },
+      }))
+      setCountry("")
     } catch (error) {
       console.error(error);
       setRecipe("Failed to load recipe. Please try again.");
@@ -100,14 +105,14 @@ export default function Home() {
                 geographies.map((geo) => (
                   <Geography
                     pointerEvents="auto"
-                    onMouseEnter={() => {
-                      const NAME = geo.properties.name;
-                      console.log("countries name;", geo.properties.name);
-                      setCountry(NAME);
-                    }}
+                    // onMouseEnter={() => {
+                    //   const NAME = geo.properties.name;
+                    //   console.log("countries name;", geo.properties.name);
+                    //   setCountry(NAME);
+                    // }}
                    
                     onClick={() => {
-                      handleCountryClick(geo.properties.name);
+                      setCountry(geo.properties.name);
                     }}
                     key={geo.rsmKey}
                     geography={geo}
