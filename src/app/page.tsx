@@ -77,7 +77,7 @@ export default function Home() {
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <form className="w-full max-w-xl p-6 	"  onSubmit={handleSubmit}>
 
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
 
     
         <Switch />
@@ -105,9 +105,7 @@ export default function Home() {
                       console.log("countries name;", geo.properties.name);
                       setCountry(NAME);
                     }}
-                    // onMouseLeave={() => {
-                    //   setCountry("");
-                    // }}
+                   
                     onClick={() => {
                       handleCountryClick(geo.properties.name);
                     }}
