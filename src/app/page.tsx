@@ -46,7 +46,7 @@ export default function Home() {
   }
 
 
-  const handleSubmit = async (e: React.FocusEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault()
     try {
       const response = await fetch("/api/updateRecipe", {
@@ -90,7 +90,7 @@ export default function Home() {
         <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>
           {country}
         </Tooltip>
-        <Fieldset onDietaryChange={handleDietaryChange} />
+        <Fieldset onDietaryChange={handleDietaryChange}/>
 
         <ComposableMap data-tip="">
           <ZoomableGroup zoom={1}>
