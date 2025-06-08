@@ -1,6 +1,5 @@
 "use client"; // Add this at the very top of the file
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   ComposableMap,
@@ -13,6 +12,8 @@ import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
 import Fieldset from "@/components/ui/fieldset";
 import { useTheme } from "@/context/theme-context";
+// import { Toaster } from "@/components/ui/sonner"
+import { Toaster, toast } from "sonner";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -44,11 +45,10 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     if (country === "") {
-      alert("please select a country");
+      toast.error("select a country first");
       return;
     }
     try {
-
       const response = await fetch("/api/updateRecipe", {
         method: "POST",
         headers: {
@@ -62,6 +62,7 @@ export default function Home() {
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
       }
+      toast.success("information submitted!");
       const data = await response.json();
       setRecipe(data.recipe);
       setDietaryData({
@@ -83,12 +84,20 @@ export default function Home() {
       <form className="w-full max-w-xl p-6 	" onSubmit={handleSubmit}>
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch />
+          <Toaster
+            richColors
+            position="bottom-center"
+            toastOptions={{
+              className: "mx-auto",
+            }}
+          />
 
           <h1 className="text-2xl font-bold text-center mb-6">
             Unsure what to cook? Let recipe for sucess inspire your next meal
             from any country in the world
           </h1>
           <p className="text-center text-gray-600 mb-4">{country}</p>
+
           <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>
             {country}
           </Tooltip>
@@ -124,9 +133,9 @@ export default function Home() {
                   ))
                 }
               </Geographies>
-              {/* {markers.map({name, coordinates, markerOffset})} */}
             </ZoomableGroup>
           </ComposableMap>
+
           <p>{recipe}</p>
           <Button type="submit">Submit</Button>
           {/* <button type="submit">Submit</button> */}
