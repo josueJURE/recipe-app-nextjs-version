@@ -3,14 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "./input";
 import { Label } from "@/components/ui/label";
 
-const dietaryRequirements = [
-  {
-    question: "Vegan?",
-  },
-  {
-    question: "Other?",
-  },
-];
+
 
 interface FieldsetProps {
   onDietaryChange: (data: {
