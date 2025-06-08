@@ -56,6 +56,18 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
     });
   }
 
+  const checkBoxesArray = [
+    { boolanValue: veganChecked,
+      callback: (checked: boolean) => handleVeganChange(checked as boolean),
+      label: "vegan?"
+     },
+    {
+      boolanValue: otherChecked,
+      callback: (checked:boolean) => handleOtherChange(checked as boolean),
+       label: "Other?"
+    },
+  ];
+
   return (
     <fieldset
       aria-label="allergies section"
@@ -63,22 +75,17 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
     >
       <legend>Indicate any dietary requirements</legend>
       <div className="flex flex-row gap-6">
-        <div className="flex items-center gap-3">
-          <Checkbox
-            checked={veganChecked}
-            onCheckedChange={(checked) => handleVeganChange(checked as boolean)}
-          />
-          <Label htmlFor="vegan">Vegan?</Label>
-        </div>
 
-        <div className="flex items-center gap-3">
-          <Checkbox
-            checked={otherChecked}
-            onCheckedChange={(checked) => handleOtherChange(checked as boolean)}
-          />
-          <Label htmlFor="other">Other?</Label>
-          {otherChecked && <Input onChange={handleUserInput} />}
-        </div>
+        {checkBoxesArray.map((checkBox, index) => (
+          <div key={index} className="flex items-center gap-3">
+            <Checkbox 
+              checked={checkBox.boolanValue}
+              onCheckedChange={checkBox.callback}
+            />
+            <Label htmlFor={checkBox.label}>{checkBox.label}</Label>
+            {(otherChecked && checkBox.label === "Other?") && <Input onChange={handleUserInput} />}
+          </div>
+        ))}
       </div>
     </fieldset>
   );
