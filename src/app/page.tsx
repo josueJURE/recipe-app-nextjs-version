@@ -62,7 +62,7 @@ export default function Home() {
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
       }
-      toast.success("information submitted!");
+      // toast.success("information submitted!");
       const data = await response.json();
       setRecipe(data.recipe);
       setDietaryData({
@@ -111,12 +111,6 @@ export default function Home() {
                   geographies.map((geo) => (
                     <Geography
                       pointerEvents="auto"
-                      // onMouseEnter={() => {
-                      //   const NAME = geo.properties.name;
-                      //   console.log("countries name;", geo.properties.name);
-                      //   setCountry(NAME);
-                      // }}
-
                       onClick={() => {
                         setCountry(geo.properties.name);
                       }}
@@ -135,9 +129,10 @@ export default function Home() {
               </Geographies>
             </ZoomableGroup>
           </ComposableMap>
-
-          <p>{recipe}</p>
           <Button type="submit">Submit</Button>
+
+          <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">{recipe}</p>
+         
           {/* <button type="submit">Submit</button> */}
         </div>
       </form>
