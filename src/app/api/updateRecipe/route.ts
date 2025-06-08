@@ -5,7 +5,14 @@ const openai = new OpenAI({
   apiKey: process.env.openaiAPI,
 });
 
-const dummyVar = "England"
+let recipe = "";
+for (let i = 0; i < 20; i++) { // Adjust loop count
+  recipe += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
+}
+console.log(recipe);
+
+
+
 
 export async function POST(request: Request) {
   try {
@@ -24,10 +31,11 @@ export async function POST(request: Request) {
     // });
 
     // const recipe = response.choices[0]?.message?.content || "No recipe found";
-    const recipe = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati vero nihil dolores officia sequi dicta. Quo ratione ab adipisci culpa aliquam, facilis reprehenderit odio at sapiente inventore laborum ullam qui"
-    console.log("Generated recipe:", recipe);
+    // const recipe = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati vero nihil dolores officia sequi dicta. Quo ratione ab adipisci culpa aliquam, facilis reprehenderit odio at sapiente inventore laborum ullam qui"
+    // console.log("Generated recipe:", recipe);
     
-    return NextResponse.json({ recipe });
+    return NextResponse.json({recipe});
+    
   } catch (error) {
     console.error("Error generating recipe:", error);
     return NextResponse.json(
@@ -36,3 +44,5 @@ export async function POST(request: Request) {
     );
   }
 }
+
+// ${errorJSON}\n\n`)
