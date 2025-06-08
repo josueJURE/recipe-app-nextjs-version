@@ -57,12 +57,12 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
   }
 
   const checkBoxesArray = [
-    { boolanValue: veganChecked,
+    { booleanValue: veganChecked,
       callback: (checked: boolean) => handleVeganChange(checked),
       label: "vegan?"
      },
     {
-      boolanValue: otherChecked,
+      booleanValue: otherChecked,
       callback: (checked:boolean) => handleOtherChange(checked),
        label: "Other?"
     },
@@ -79,7 +79,7 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
         {checkBoxesArray.map((checkBox, index) => (
           <div key={index} className="flex items-center gap-3">
             <Checkbox 
-              checked={checkBox.boolanValue}
+              checked={checkBox.booleanValue}
               onCheckedChange={checkBox.callback}
             />
             <Label htmlFor={checkBox.label}>{checkBox.label}</Label>
