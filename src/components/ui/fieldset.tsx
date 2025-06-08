@@ -58,12 +58,12 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
 
   const checkBoxesArray: checkBoxeType[] = [
     { booleanValue: veganChecked,
-      callback: (checked: boolean) => handleVeganChange(checked),
+      callback: handleVeganChange,
       label: "vegan?"
      },
     {
       booleanValue: otherChecked,
-      callback: (checked:boolean) => handleOtherChange(checked),
+      callback: handleOtherChange,
        label: "Other?"
     },
   ];
