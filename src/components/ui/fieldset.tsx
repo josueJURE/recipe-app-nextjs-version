@@ -13,6 +13,13 @@ interface FieldsetProps {
   resetKey: number;
 }
 
+interface checkBoxeType {
+  booleanValue: boolean;
+  callback: (checked: boolean) => void;
+  label: string;
+
+}
+
 function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
   const [veganChecked, setVeganChecked] = useState<boolean>(false);
   const [otherChecked, setOtherChecked] = useState<boolean>(false);
@@ -49,7 +56,7 @@ function Fieldset({ onDietaryChange, resetKey }: FieldsetProps) {
     });
   }
 
-  const checkBoxesArray = [
+  const checkBoxesArray: checkBoxeType[] = [
     { booleanValue: veganChecked,
       callback: (checked: boolean) => handleVeganChange(checked),
       label: "vegan?"
