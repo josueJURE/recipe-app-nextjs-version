@@ -43,11 +43,11 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
+    if (country === "") {
+      alert("please select a country");
+      return;
+    }
     try {
-      if (country === "") {
-        alert("please select a country");
-        return;
-      }
 
       const response = await fetch("/api/updateRecipe", {
         method: "POST",
