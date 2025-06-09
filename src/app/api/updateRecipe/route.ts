@@ -5,11 +5,11 @@ const openai = new OpenAI({
   apiKey: process.env.openaiAPI,
 });
 
-// let recipe = "";
-// for (let i = 0; i < 20; i++) { // Adjust loop count
-//   recipe += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
-// }
-// console.log(recipe);
+let recipe = "";
+for (let i = 0; i < 20; i++) { // Adjust loop count
+  recipe += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
+}
+console.log(recipe);
 
 
 
@@ -36,17 +36,17 @@ export async function POST(request: Request) {
 
 
     
-    const response = await openai.chat.completions.create({
-      messages: [
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      model: "gpt-3.5-turbo",
-    });
+    // const response = await openai.chat.completions.create({
+    //   messages: [
+    //     {
+    //       role: "user",
+    //       content: prompt,
+    //     },
+    //   ],
+    //   model: "gpt-3.5-turbo",
+    // });
 
-    const recipe = response.choices[0]?.message?.content || "No recipe found";
+    // const recipe = response.choices[0]?.message?.content || "No recipe found";
  
     // const recipe = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati vero nihil dolores officia sequi dicta. Quo ratione ab adipisci culpa aliquam, facilis reprehenderit odio at sapiente inventore laborum ullam qui"
     console.log("Generated recipe:", prompt);
@@ -62,4 +62,3 @@ export async function POST(request: Request) {
   }
 }
 
-// ${errorJSON}\n\n`)
