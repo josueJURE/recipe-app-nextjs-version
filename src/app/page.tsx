@@ -102,8 +102,9 @@ export default function Home() {
           <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>
             {country}
           </Tooltip>
-          <Fieldset onDietaryChange={handleDietaryChange} resetKey={resetKey} />
+         
           <Card>
+          <Fieldset onDietaryChange={handleDietaryChange} resetKey={resetKey} />
             
           <ComposableMap data-tip="">
             <ZoomableGroup zoom={1}>
@@ -134,9 +135,9 @@ export default function Home() {
 
           </Card>
 
-          {/* <Button type="submit">Submit</Button>
+          <Button type="submit">Submit</Button>
 
-          <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">{recipe}</p> */}
+          <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">{recipe}</p>
          
           {/* <button type="submit">Submit</button> */}
         </div>
