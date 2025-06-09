@@ -14,6 +14,7 @@ import Fieldset from "@/components/ui/fieldset";
 import { useTheme } from "@/context/theme-context";
 // import { Toaster } from "@/components/ui/sonner"
 import { Toaster, toast } from "sonner";
+import {Card} from "@/components/ui/card";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -102,7 +103,8 @@ export default function Home() {
             {country}
           </Tooltip>
           <Fieldset onDietaryChange={handleDietaryChange} resetKey={resetKey} />
-
+          <Card>
+            
           <ComposableMap data-tip="">
             <ZoomableGroup zoom={1}>
               {" "}
@@ -129,9 +131,12 @@ export default function Home() {
               </Geographies>
             </ZoomableGroup>
           </ComposableMap>
-          <Button type="submit">Submit</Button>
 
-          <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">{recipe}</p>
+          </Card>
+
+          {/* <Button type="submit">Submit</Button>
+
+          <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">{recipe}</p> */}
          
           {/* <button type="submit">Submit</button> */}
         </div>
