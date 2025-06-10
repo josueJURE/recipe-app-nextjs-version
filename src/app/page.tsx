@@ -84,9 +84,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
-      <form className="w-full max-w-xl p-6 	" onSubmit={handleSubmit}>
+      <form className="w-full max-w-xl p-6 relative" onSubmit={handleSubmit}>
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
-          <Switch />
+          <Switch className="my-5" />
           <Toaster
             richColors
             position="bottom-center"
@@ -95,7 +95,7 @@ export default function Home() {
             }}
           />
 
-          <h1 className="text-2xl font-bold text-center mb-6">
+          <h1 className="text-2xl font-bold text-center mb-6 my-7">
             Unsure what to cook? Let recipe for sucess inspire your next meal
             from any country in the world
           </h1>
@@ -106,9 +106,7 @@ export default function Home() {
           </Tooltip>
 
           {displayElement && (
-            <Card
-              style={{ display: displayElement === true ? "flex" : "none" }}
-            >
+            <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <Fieldset
                 onDietaryChange={handleDietaryChange}
                 resetKey={resetKey}
@@ -146,7 +144,7 @@ export default function Home() {
           )}
 
           {!displayElement && (
-            <Card>
+            <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
                 {recipe}
               </p>
