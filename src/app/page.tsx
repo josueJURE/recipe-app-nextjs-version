@@ -105,52 +105,58 @@ export default function Home() {
             {country}
           </Tooltip>
 
-          <Card style={{ display: displayElement === true ? "flex" : "none" }}>
-            <Fieldset
-              onDietaryChange={handleDietaryChange}
-              resetKey={resetKey}
-            />
+          {displayElement && (
+            <Card
+              style={{ display: displayElement === true ? "flex" : "none" }}
+            >
+              <Fieldset
+                onDietaryChange={handleDietaryChange}
+                resetKey={resetKey}
+              />
 
-            <ComposableMap data-tip="">
-              <ZoomableGroup zoom={1}>
-                {" "}
-                <Geographies geography={geoUrl}>
-                  {({ geographies }) =>
-                    geographies.map((geo) => (
-                      <Geography
-                        pointerEvents="auto"
-                        onClick={() => {
-                          setCountry(geo.properties.name);
-                        }}
-                        key={geo.rsmKey}
-                        geography={geo}
-                        fill={isDarkMode ? "#374151" : "#EAEAEC"}
-                        stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
-                        style={{
-                          default: { outline: "none" },
-                          hover: { fill: "#F53" },
-                          pressed: { fill: "#E42" },
-                        }}
-                      />
-                    ))
-                  }
-                </Geographies>
-              </ZoomableGroup>
-            </ComposableMap>
+              <ComposableMap data-tip="">
+                <ZoomableGroup zoom={1}>
+                  {" "}
+                  <Geographies geography={geoUrl}>
+                    {({ geographies }) =>
+                      geographies.map((geo) => (
+                        <Geography
+                          pointerEvents="auto"
+                          onClick={() => {
+                            setCountry(geo.properties.name);
+                          }}
+                          key={geo.rsmKey}
+                          geography={geo}
+                          fill={isDarkMode ? "#374151" : "#EAEAEC"}
+                          stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
+                          style={{
+                            default: { outline: "none" },
+                            hover: { fill: "#F53" },
+                            pressed: { fill: "#E42" },
+                          }}
+                        />
+                      ))
+                    }
+                  </Geographies>
+                </ZoomableGroup>
+              </ComposableMap>
 
-            <Button type="submit">Submit</Button>
-          </Card>
+              <Button type="submit">Submit</Button>
+            </Card>
+          )}
 
-          <Card style={{ display: displayElement === false ? "flex" : "none" }}>
-            <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
-              {recipe}
-            </p>
+          {!displayElement && (
+            <Card>
+              <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
+                {recipe}
+              </p>
 
-            <Button type="button">Send recipe to my inbox</Button>
-            <Button type="button" onClick={() => setDisplayElement(true)}>
-              I want another recipe
-            </Button>
-          </Card>
+              <Button type="button">Send recipe to my inbox</Button>
+              <Button type="button" onClick={() => setDisplayElement(true)}>
+                I want another recipe
+              </Button>
+            </Card>
+          )}
         </div>
       </form>
     </main>
