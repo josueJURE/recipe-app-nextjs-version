@@ -14,7 +14,7 @@ import Fieldset from "@/components/ui/fieldset";
 import { useTheme } from "@/context/theme-context";
 // import { Toaster } from "@/components/ui/sonner"
 import { Toaster, toast } from "sonner";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -42,11 +42,11 @@ export default function Home() {
   const { isDarkMode } = useTheme();
 
   const [country, setCountry] = useState<string>("");
-  const [displayElement, setDisplayElement] = useState<boolean>(true);
+  const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    if (country === "" && e.type === "submit") {
+    if (country === "") {
       toast.error("select a country first");
       return;
     }
@@ -67,7 +67,7 @@ export default function Home() {
       // toast.success("information submitted!");
       const data = await response.json();
       setRecipe(data.recipe);
-      setDisplayElement(false);
+      setIsElementVisible(false);
       setDietaryData({
         vegan: false,
         other: { checked: false, text: "" },
@@ -105,7 +105,7 @@ export default function Home() {
             {country}
           </Tooltip>
 
-          {displayElement && (
+          {isElementVisible && (
             <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <Fieldset
                 onDietaryChange={handleDietaryChange}
@@ -143,14 +143,17 @@ export default function Home() {
             </Card>
           )}
 
-          {!displayElement && (
+          {!isElementVisible && (
             <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
-                {recipe}
-              </p>
+              <CardContent>
+                {" "}
+                <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
+                  {recipe}
+                </p>
+              </CardContent>
 
               <Button type="button">Send recipe to my inbox</Button>
-              <Button type="button" onClick={() => setDisplayElement(true)}>
+              <Button type="button" onClick={() => setIsElementVisible(true)}>
                 I want another recipe
               </Button>
             </Card>
