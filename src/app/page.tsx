@@ -95,7 +95,7 @@ export default function Home() {
             }}
           />
 
-          <h1 className="text-2xl font-bold text-center mb-6 my-7">
+          <h1 id="header" className="text-2xl font-bold text-center mb-6 my-7">
             Unsure what to cook? Let recipe for sucess inspire your next meal
             from any country in the world
           </h1>
