@@ -14,6 +14,7 @@ import Fieldset from "@/components/ui/fieldset";
 import { useTheme } from "@/context/theme-context";
 // import { Toaster } from "@/components/ui/sonner"
 import { Toaster, toast } from "sonner";
+import { Card } from "@/components/ui/card";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -41,10 +42,11 @@ export default function Home() {
   const { isDarkMode } = useTheme();
 
   const [country, setCountry] = useState<string>("");
+  const [displayElement, setDisplayElement] = useState<boolean>(true);
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    if (country === "") {
+    if (country === "" && e.type === "submit") {
       toast.error("select a country first");
       return;
     }
@@ -65,6 +67,7 @@ export default function Home() {
       // toast.success("information submitted!");
       const data = await response.json();
       setRecipe(data.recipe);
+      setDisplayElement(false);
       setDietaryData({
         vegan: false,
         other: { checked: false, text: "" },
@@ -101,39 +104,53 @@ export default function Home() {
           <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>
             {country}
           </Tooltip>
-          <Fieldset onDietaryChange={handleDietaryChange} resetKey={resetKey} />
 
-          <ComposableMap data-tip="">
-            <ZoomableGroup zoom={1}>
-              {" "}
-              <Geographies geography={geoUrl}>
-                {({ geographies }) =>
-                  geographies.map((geo) => (
-                    <Geography
-                      pointerEvents="auto"
-                      onClick={() => {
-                        setCountry(geo.properties.name);
-                      }}
-                      key={geo.rsmKey}
-                      geography={geo}
-                      fill={isDarkMode ? "#374151" : "#EAEAEC"}
-                      stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
-                      style={{
-                        default: { outline: "none" },
-                        hover: { fill: "#F53" },
-                        pressed: { fill: "#E42" },
-                      }}
-                    />
-                  ))
-                }
-              </Geographies>
-            </ZoomableGroup>
-          </ComposableMap>
-          <Button type="submit">Submit</Button>
+          <Card style={{ display: displayElement === true ? "flex" : "none" }}>
+            <Fieldset
+              onDietaryChange={handleDietaryChange}
+              resetKey={resetKey}
+            />
 
-          <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">{recipe}</p>
-         
-          {/* <button type="submit">Submit</button> */}
+            <ComposableMap data-tip="">
+              <ZoomableGroup zoom={1}>
+                {" "}
+                <Geographies geography={geoUrl}>
+                  {({ geographies }) =>
+                    geographies.map((geo) => (
+                      <Geography
+                        pointerEvents="auto"
+                        onClick={() => {
+                          setCountry(geo.properties.name);
+                        }}
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill={isDarkMode ? "#374151" : "#EAEAEC"}
+                        stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
+                        style={{
+                          default: { outline: "none" },
+                          hover: { fill: "#F53" },
+                          pressed: { fill: "#E42" },
+                        }}
+                      />
+                    ))
+                  }
+                </Geographies>
+              </ZoomableGroup>
+            </ComposableMap>
+
+            <Button type="submit">Submit</Button>
+          </Card>
+
+          <Card style={{ display: displayElement === false ? "flex" : "none" }}>
+            <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
+              {recipe}
+            </p>
+
+            <Button type="button">Send recipe to my inbox</Button>
+            <Button type="button" onClick={() => setDisplayElement(true)}>
+              I want another recipe
+            </Button>
+          </Card>
         </div>
       </form>
     </main>
