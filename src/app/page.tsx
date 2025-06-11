@@ -19,23 +19,13 @@ import { Card, CardContent } from "@/components/ui/card";
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
 interface ButtonTypes {
-  width: string;
+  width: `w-${number}`;
   type: "button";
-  innerText: string;
+  label: string;
+  onClick? : () => void
 }
 
-const buttonsArray: ButtonTypes[] = [
-  {
-    width: "w-60",
-    type: "button",
-    innerText: "Send recipe to my inbox",
-  },
-  {
-    width: "w-60",
-    type: "button",
-    innerText: "I want another recipe",
-  },
-];
+
 
 export default function Home() {
   const [dietaryData, setDietaryData] = useState<{
@@ -62,6 +52,20 @@ export default function Home() {
 
   const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
+
+  const buttonsArray: ButtonTypes[] = [
+    {
+      width: "w-60",
+      type: "button",
+      label: "Send recipe to my inbox",
+    },
+    {
+      width: "w-60",
+      type: "button",
+      label: "I want another recipe",
+      onClick: () => setIsElementVisible(true)
+    }
+  ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
@@ -178,25 +182,15 @@ export default function Home() {
                 <div className="flex flex-col gap-2 mt-40">
                   {buttonsArray.map((button, index) => (
                     <Button
-                    onClick={button.innerText ===  "I want another recipe" ? () => setIsElementVisible(true) : undefined }
+                    onClick={button.onClick}
                       key={index}
                       className={button.width}
                       type={button.type}
                     >
-                      {button.innerText}
+                      {button.label}
                     </Button>
                   ))}
 
-                  <Button className="w-60" type="button">
-                    Send recipe to my inbox
-                  </Button>
-                  <Button
-                    className="w-60"
-                    type="button"
-                    onClick={() => setIsElementVisible(true)}
-                  >
-                    I want another recipe
-                  </Button>
                 </div>
               </CardContent>
             </Card>
