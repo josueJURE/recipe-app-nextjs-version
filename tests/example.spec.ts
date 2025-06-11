@@ -16,3 +16,15 @@ test.describe("Home page", () => {
     );
   });
 });
+
+
+test.describe("form", () => {
+  test("form should be displayed", async ({ page }: PageType) => {
+    // Wait for form to be visible
+    await page.waitForSelector("#form", { state: "visible" });
+    await expect(page.locator("#form")).toBeVisible();
+
+    // Verify form elements exist
+    await expect(page.locator("#submit")).toBeVisible();
+  });
+});
