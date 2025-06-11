@@ -18,6 +18,15 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
+interface ButtonTypes {
+  width: `w-${number}`;
+  type: "button";
+  label: string;
+  onClick? : () => void
+}
+
+
+
 export default function Home() {
   const [dietaryData, setDietaryData] = useState<{
     vegan: boolean;
@@ -43,6 +52,20 @@ export default function Home() {
 
   const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
+
+  const buttonsArray: ButtonTypes[] = [
+    {
+      width: "w-60",
+      type: "button",
+      label: "Send recipe to my inbox",
+    },
+    {
+      width: "w-60",
+      type: "button",
+      label: "I want another recipe",
+      onClick: () => setIsElementVisible(true)
+    }
+  ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
@@ -157,13 +180,17 @@ export default function Home() {
                   {recipe}
                 </p>
                 <div className="flex flex-col gap-2 mt-40">
-                  <Button className="w-60" type="button">Send recipe to my inbox</Button>
-                  <Button className="w-60" 
-                    type="button"
-                    onClick={() => setIsElementVisible(true)}
-                  >
-                    I want another recipe
-                  </Button>
+                  {buttonsArray.map((button, index) => (
+                    <Button
+                    onClick={button.onClick}
+                      key={index}
+                      className={button.width}
+                      type={button.type}
+                    >
+                      {button.label}
+                    </Button>
+                  ))}
+
                 </div>
               </CardContent>
             </Card>
