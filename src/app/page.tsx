@@ -18,6 +18,25 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
+interface ButtonTypes {
+  width: string;
+  type: "button";
+  innerText: string;
+}
+
+const buttonsArray: ButtonTypes[] = [
+  {
+    width: "w-60",
+    type: "button",
+    innerText: "Send recipe to my inbox",
+  },
+  {
+    width: "w-60",
+    type: "button",
+    innerText: "I want another recipe",
+  },
+];
+
 export default function Home() {
   const [dietaryData, setDietaryData] = useState<{
     vegan: boolean;
@@ -157,8 +176,22 @@ export default function Home() {
                   {recipe}
                 </p>
                 <div className="flex flex-col gap-2 mt-40">
-                  <Button className="w-60" type="button">Send recipe to my inbox</Button>
-                  <Button className="w-60" 
+                  {buttonsArray.map((button, index) => (
+                    <Button
+                    onClick={button.innerText ===  "I want another recipe" ? () => setIsElementVisible(true) : undefined }
+                      key={index}
+                      className={button.width}
+                      type={button.type}
+                    >
+                      {button.innerText}
+                    </Button>
+                  ))}
+
+                  <Button className="w-60" type="button">
+                    Send recipe to my inbox
+                  </Button>
+                  <Button
+                    className="w-60"
                     type="button"
                     onClick={() => setIsElementVisible(true)}
                   >
