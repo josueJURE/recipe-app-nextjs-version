@@ -84,7 +84,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
-      <form id="form" className="w-full max-w-xl p-6 relative" onSubmit={handleSubmit}>
+      <form
+        id="form"
+        className="w-full max-w-xl p-6 relative"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch className="my-5" />
           <Toaster
@@ -139,23 +143,29 @@ export default function Home() {
                 </ZoomableGroup>
               </ComposableMap>
 
-              <Button id="submit" type="submit">Submit</Button>
+              <Button id="submit" type="submit">
+                Submit
+              </Button>
             </Card>
           )}
 
           {!isElementVisible && (
             <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <CardContent>
+              <CardContent className="flex justify-center flex-col items-center gap-0">
                 {" "}
                 <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
                   {recipe}
                 </p>
+                <div className="flex flex-col gap-2 mt-40">
+                  <Button className="w-60" type="button">Send recipe to my inbox</Button>
+                  <Button className="w-60" 
+                    type="button"
+                    onClick={() => setIsElementVisible(true)}
+                  >
+                    I want another recipe
+                  </Button>
+                </div>
               </CardContent>
-
-              <Button type="button">Send recipe to my inbox</Button>
-              <Button type="button" onClick={() => setIsElementVisible(true)}>
-                I want another recipe
-              </Button>
             </Card>
           )}
         </div>
