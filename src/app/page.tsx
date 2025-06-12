@@ -22,7 +22,9 @@ interface ButtonTypes {
   width: `w-${number}`;
   type: "button";
   label: string;
-  onClick? : () => void
+  onClick? : () => void;
+  onRemoveImage? : () => void;
+
 }
 
 
@@ -47,6 +49,7 @@ export default function Home() {
   };
 
   const [recipe, setRecipe] = useState<string>("");
+  const [image, setImage] =  useState<string>("")
 
   const { isDarkMode } = useTheme();
 
@@ -63,7 +66,10 @@ export default function Home() {
       width: "w-60",
       type: "button",
       label: "I want another recipe",
-      onClick: () => setIsElementVisible(true)
+      onClick: () => setIsElementVisible(true),
+      onRemoveImage: () => setImage("")
+     
+      
     }
   ];
 
@@ -89,6 +95,8 @@ export default function Home() {
       }
       // toast.success("information submitted!");
       const data = await response.json();
+      console.log(data.recipeImage)
+      setImage(data.recipeImage)
       setRecipe(data.recipe);
       setIsElementVisible(false);
       setDietaryData({
@@ -109,8 +117,12 @@ export default function Home() {
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <form
         id="form"
-        className="w-full max-w-xl p-6 relative"
+
+        className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')]"
         onSubmit={handleSubmit}
+        style={{ backgroundImage: `url('${image}')` }}
+      
+        
       >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch className="my-5" />
@@ -182,7 +194,10 @@ export default function Home() {
                 <div className="flex flex-col gap-2 mt-40">
                   {buttonsArray.map((button, index) => (
                     <Button
-                    onClick={button.onClick}
+                    onClick={() => {
+                      button.onClick?.();
+                      button.onRemoveImage?.();
+                    }}
                       key={index}
                       className={button.width}
                       type={button.type}
