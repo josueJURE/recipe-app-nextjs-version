@@ -1,20 +1,22 @@
-"use client"; // Add this at the very top of the file
+"use client"; 
 
+// components/ui folder
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import Fieldset from "@/components/ui/fieldset";
+import { Card, CardContent } from "@/components/ui/card";
+// single map third-party library
 import {
   ComposableMap,
   Geographies,
   Geography,
   ZoomableGroup,
 } from "react-simple-maps";
-import { Switch } from "@/components/ui/switch";
+//others
 import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
-import Fieldset from "@/components/ui/fieldset";
 import { useTheme } from "@/context/theme-context";
-// import { Toaster } from "@/components/ui/sonner"
 import { Toaster, toast } from "sonner";
-import { Card, CardContent } from "@/components/ui/card";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -22,10 +24,9 @@ interface ButtonTypes {
   width: `w-${number}`;
   type: "button";
   label: string;
-  onClick? : () => void
+  onClick?: () => void;
+  onRemoveImage?: () => void;
 }
-
-
 
 export default function Home() {
   const [dietaryData, setDietaryData] = useState<{
@@ -37,6 +38,11 @@ export default function Home() {
   });
 
   const [resetKey, setResetKey] = useState(0);
+  const [recipe, setRecipe] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+  const { isDarkMode } = useTheme();
+  const [country, setCountry] = useState<string>("");
+  const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
 
   const handleDietaryChange = (data: {
     vegan: boolean;
@@ -46,12 +52,7 @@ export default function Home() {
     console.log("data:", data);
   };
 
-  const [recipe, setRecipe] = useState<string>("");
 
-  const { isDarkMode } = useTheme();
-
-  const [country, setCountry] = useState<string>("");
-  const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
 
   const buttonsArray: ButtonTypes[] = [
     {
@@ -63,8 +64,9 @@ export default function Home() {
       width: "w-60",
       type: "button",
       label: "I want another recipe",
-      onClick: () => setIsElementVisible(true)
-    }
+      onClick: () => setIsElementVisible(true),
+      onRemoveImage: () => setImage(""),
+    },
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
@@ -89,6 +91,8 @@ export default function Home() {
       }
       // toast.success("information submitted!");
       const data = await response.json();
+      console.log(data.recipeImage);
+      setImage(data.recipeImage);
       setRecipe(data.recipe);
       setIsElementVisible(false);
       setDietaryData({
@@ -109,8 +113,9 @@ export default function Home() {
     <main className="min-h-screen w-full flex items-center justify-center p-4">
       <form
         id="form"
-        className="w-full max-w-xl p-6 relative"
+        className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')]"
         onSubmit={handleSubmit}
+        style={{ backgroundImage: `url('${image}')` }}
       >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch className="my-5" />
@@ -182,7 +187,10 @@ export default function Home() {
                 <div className="flex flex-col gap-2 mt-40">
                   {buttonsArray.map((button, index) => (
                     <Button
-                    onClick={button.onClick}
+                      onClick={() => {
+                        button.onClick?.(); // Calls onClick() only if it exists
+                        button.onRemoveImage?.();  // Calls onRemoveImage() only if it exists
+                      }}
                       key={index}
                       className={button.width}
                       type={button.type}
@@ -190,7 +198,6 @@ export default function Home() {
                       {button.label}
                     </Button>
                   ))}
-
                 </div>
               </CardContent>
             </Card>
