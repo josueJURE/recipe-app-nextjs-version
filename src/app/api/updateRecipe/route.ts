@@ -64,7 +64,6 @@
 // mock API
 
 import { NextResponse } from "next/server";
-import { OpenAI } from "openai";
 
 let recipe = "";
 for (let i = 0; i < 20; i++) {

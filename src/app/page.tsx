@@ -188,8 +188,8 @@ export default function Home() {
                   {buttonsArray.map((button, index) => (
                     <Button
                       onClick={() => {
-                        button.onClick?.();
-                        button.onRemoveImage?.();
+                        button.onClick?.(); // Calls onClick() only if it exists
+                        button.onRemoveImage?.();  // Calls onRemoveImage() only if it exists
                       }}
                       key={index}
                       className={button.width}
