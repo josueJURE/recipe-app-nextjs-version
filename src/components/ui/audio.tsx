@@ -21,7 +21,7 @@ function Audio() {
         url: "/recipe_audio.mp3",
         mediaControls: false,
         dragToSeek: true,
-        width: "35vw",
+        width: "15vw",
         height: 60,
         hideScrollbar: true,
         normalize: true,
@@ -67,9 +67,10 @@ function Audio() {
   };
 
   return (
-    <div className="container">
-      <div className="sub-container gap-1.5">
-        <div ref={waveformRef}></div>
+    <div className="flex justify-center flex-col items-center gap-0">
+      <div className="justify-center content-center">
+        <div ref={waveformRef} className="mt-10 flex"> </div>
+        <div className="flex gap-1.5 content-center justify-center">
         <Button type="button" onClick={handleRewind}>
           <BsSkipBackward />
         </Button>
@@ -82,9 +83,17 @@ function Audio() {
         <Button type="button" onClick={handleSkipForward}>
           <BsSkipForward />
         </Button>
+
+        </div>
+                
+       
+       
+  
       </div>
     </div>
   );
+
+  // flex flex-col gap-2 mt-40"
 
   // return (
   //   <div className="recording">

@@ -111,11 +111,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen w-full flex items-center justify-center p-4">
+    <main className="min-h-screen w-full flex items-center justify-center p-4 ">
       <form
 
         id="form"
-        className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')]"
+        className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')] rounded-2xl"
         onSubmit={handleSubmit}
         style={{ backgroundImage: `url('${image}')` }}
       >
