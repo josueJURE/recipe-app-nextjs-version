@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import WaveSurfer from "wavesurfer.js";
+import { Button } from "./button";
 import {
   BsSkipBackward,
   BsSkipForward,
@@ -18,7 +19,7 @@ function Audio() {
         container: waveformRef.current,
         waveColor: "black",
         url: "/recipe_audio.mp3",
-        mediaControls: true,
+        mediaControls: false,
         dragToSeek: true,
         width: "35vw",
         height: 60,
@@ -49,7 +50,7 @@ function Audio() {
   const handlePlay = () => {
     if (wavesurfer) {
       wavesurfer.play();
-      console.log("play")
+      console.log("play");
     }
   };
 
@@ -67,21 +68,20 @@ function Audio() {
 
   return (
     <div className="container">
-      <div className="sub-container">
+      <div className="sub-container gap-1.5">
         <div ref={waveformRef}></div>
-        <button type="button" onClick={handleRewind}>
+        <Button type="button" onClick={handleRewind}>
           <BsSkipBackward />
-        </button>
-        <button type="button" onClick={handleSkipForward}>
-          <BsSkipForward />
-        </button>
-        <button type="button" onClick={handlePlay}>Play</button>
-        <button type="button" onClick={handlePause}>
+        </Button>
+        <Button type="button" onClick={handlePause}>
           <BsFillPlayFill />
-        </button>
-        <button type="button">
-          <BsFillStopFill/>
-        </button>
+        </Button>
+        <Button type="button" onClick={hanldeStop}>
+          <BsFillStopFill />
+        </Button>
+        <Button type="button" onClick={handleSkipForward}>
+          <BsSkipForward />
+        </Button>
       </div>
     </div>
   );
