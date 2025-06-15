@@ -181,7 +181,7 @@ export default function Home() {
           )}
 
           {!isElementVisible && (
-            <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full">
               <CardContent className="flex justify-center flex-col items-center gap-0">
                 {" "}
                 <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
@@ -202,8 +202,9 @@ export default function Home() {
                     </Button>
                   ))}
                 </div>
+                <Audio/>
               </CardContent>
-              <Audio/>
+         
             </Card>
           )}
         </div>
