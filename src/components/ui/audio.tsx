@@ -8,6 +8,7 @@ import {
   BsFillStopFill,
   BsFillPlayFill,
 } from "react-icons/bs";
+import { IconType } from "react-icons/lib";
 
 function Audio() {
   const waveformRef = useRef(null);
@@ -66,60 +67,62 @@ function Audio() {
     }
   };
 
+  interface buttonArrayTypes {
+    btnType: "button";
+    btnFunction: () => void;
+    innerComponent: IconType;
+    btnId: string;
+  }
+
+  const buttonArray: buttonArrayTypes[] = [
+    {
+      btnType: "button",
+      btnFunction: handleRewind,
+      innerComponent: BsSkipBackward,
+      btnId: "rewind-btn",
+    },
+    {
+      btnType: "button",
+      btnFunction: handlePause,
+      innerComponent: BsFillPlayFill,
+      btnId: "pause-btn",
+    },
+    {
+      btnType: "button",
+      btnFunction: hanldeStop,
+      innerComponent: BsFillStopFill,
+      btnId: "stop-btn",
+    },
+    {
+      btnType: "button",
+      btnFunction: handleSkipForward,
+      innerComponent: BsSkipForward,
+      btnId: "forward-btn",
+    },
+  ];
+
   return (
     <div className="flex justify-center flex-col items-center gap-0">
-      <div className="justify-center content-center">
-        <div ref={waveformRef} className="mt-10 flex"> </div>
-        <div className="flex gap-1.5 content-center justify-center">
-        <Button type="button" onClick={handleRewind}>
-          <BsSkipBackward />
-        </Button>
-        <Button type="button" onClick={handlePause}>
-          <BsFillPlayFill />
-        </Button>
-        <Button type="button" onClick={hanldeStop}>
-          <BsFillStopFill />
-        </Button>
-        <Button type="button" onClick={handleSkipForward}>
-          <BsSkipForward />
-        </Button>
-
+      <div className="justify-center content-center gap-2">
+        <div ref={waveformRef} className="mt-10 flex">
+          {" "}
         </div>
-                
-       
-       
-  
+        <div className="flex gap-1.5 content-center justify-center">
+          {buttonArray.map((button) => (
+            <Button
+              type={button.btnType}
+              onClick={button.btnFunction}
+              key={button.btnId}
+            >
+              <button.innerComponent key={button.btnId} />
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );
 
-  // flex flex-col gap-2 mt-40"
 
-  // return (
-  //   <div className="recording">
-  //   {/* <FaPlay size={30} />
-  //   <FaCirclePause size={30} />
-  //   <FaRegStopCircle size={30} />
-  //   <IoSpeedometer size={30} /> */}
-  //   <audio style={{ width: '25rem', height: '9rem'}} controls src="./speech.mp3"></audio>
-  //   <source className="audio_source" type="audio/mpeg" src="./speech.mp3"/>
-  //   <i className="fa-solid fa-microphone" data-name="microphone"></i>
-  //   <i className="fa-solid fa-pause" data-name="pause"></i>
-  //   <i className="fa-solid fa-stop" data-name="stop"></i>
-  //   <div className="speed-wrapper">
-  //     {/* <label htmlFor="speed">Speed</label> */}
-  //     {/* <input onChange={handleCount}
-  //       type="number"
-  //       name="speed"
-  //       id="speed"
-  //       min="0.25"
-  //       max="2"
-  //       step="0.25"
-  //       value={count}
-  //     ></input> */}
-  //   </div>
-  // </div>
-  // )
 }
 
 export default Audio;
