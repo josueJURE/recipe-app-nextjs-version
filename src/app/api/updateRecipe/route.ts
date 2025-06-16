@@ -1,5 +1,7 @@
 // import { NextResponse } from "next/server";
 // import { OpenAI } from "openai";
+// import fs from "fs";
+// import path from "path";
 
 // const openai = new OpenAI({
 //   apiKey: process.env.openaiAPI,
@@ -42,9 +44,25 @@
 //       size: "1024x1024",
 //     });
 
+
 //     const recipeImage = result?.data?.[0]?.url;
 
 //     const recipe = response.choices[0]?.message?.content || "No recipe found";
+
+
+//     const audioPromise = openai.audio.speech
+//     .create({
+//       model: "tts-1",
+//       voice: "alloy",
+//       input: `${recipe}`,
+//     })
+
+//     const mp3 = await audioPromise;
+//     const buffer = Buffer.from(await mp3.arrayBuffer());
+//     const speechFile = path.join(process.cwd(), "public", "recipe_audio.mp3");
+//     await fs.promises.writeFile(speechFile, buffer);
+
+//     console.log("audioPromise:", audioPromise)
 
 //     // const recipe = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati vero nihil dolores officia sequi dicta. Quo ratione ab adipisci culpa aliquam, facilis reprehenderit odio at sapiente inventore laborum ullam qui"
 //     console.log("recipeImage:", recipeImage);

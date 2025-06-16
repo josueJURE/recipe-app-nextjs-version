@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import Fieldset from "@/components/ui/fieldset";
+import Audio  from "@/components/ui/audio";
 import { Card, CardContent } from "@/components/ui/card";
 // single map third-party library
 import {
@@ -110,10 +111,11 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen w-full flex items-center justify-center p-4">
+    <main className="min-h-screen w-full flex items-center justify-center p-4 ">
       <form
+
         id="form"
-        className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')]"
+        className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')] rounded-2xl"
         onSubmit={handleSubmit}
         style={{ backgroundImage: `url('${image}')` }}
       >
@@ -126,11 +128,12 @@ export default function Home() {
               className: "mx-auto",
             }}
           />
+      
 
-          <h1 id="header" className="text-2xl font-bold text-center mb-6 my-7">
+          {isElementVisible && <h1 id="header" className="text-2xl font-bold text-center mb-6 my-7">
             Unsure what to cook? Let recipe for sucess inspire your next meal
             from any country in the world
-          </h1>
+          </h1>}
           <p className="text-center text-gray-600 mb-4">{country}</p>
 
           <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>
@@ -178,7 +181,7 @@ export default function Home() {
           )}
 
           {!isElementVisible && (
-            <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full">
               <CardContent className="flex justify-center flex-col items-center gap-0">
                 {" "}
                 <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
@@ -199,7 +202,9 @@ export default function Home() {
                     </Button>
                   ))}
                 </div>
+                <Audio/>
               </CardContent>
+         
             </Card>
           )}
         </div>
