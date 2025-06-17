@@ -46,6 +46,7 @@ export default function Home() {
   const { isDarkMode } = useTheme();
   const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
+  const [laoding, setIsLoading] = useState<boolean>(false);
 
   const handleDietaryChange = (data: {
     vegan: boolean;
@@ -92,12 +93,14 @@ export default function Home() {
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
       }
+      setIsLoading(true)
       // toast.success("information submitted!");
       const data = await response.json();
       console.log(data.recipeImage);
       setImage(data.recipeImage);
       setRecipe(data.recipe);
       setIsElementVisible(false);
+      setIsLoading(false)
       setDietaryData({
         vegan: false,
         other: { checked: false, text: "" },
