@@ -36,6 +36,15 @@ function Audio() {
     }
   }, []);
 
+
+  const handleAudioButtons = (option: string) => {
+    if (wavesurfer) {
+      (wavesurfer as any)[option](); // Type assertion to any
+    }
+  };
+
+
+
   const hanldeStop = () => {
     if (wavesurfer) {
       wavesurfer.stop();
