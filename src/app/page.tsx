@@ -10,6 +10,7 @@ import Audio  from "@/components/ui/audio";
 import { Card, CardContent } from "@/components/ui/card";
 import RecipeCardSkeleton from "@/components/ui/skeleton";
 
+
 // single map third-party library
 import {
   ComposableMap,
@@ -17,11 +18,19 @@ import {
   Geography,
   ZoomableGroup,
 } from "react-simple-maps";
+// nodemailer
+import { render } from '@react-email/components';
+
 //others
 import { Tooltip } from "react-tooltip";
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
+import { Input } from "@/components/ui/input";
+
+
+
+
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -31,6 +40,7 @@ interface ButtonTypes {
   label: string;
   onClick?: () => void;
   onRemoveImage?: () => void;
+  onInboxBtn? : () => void
 }
 
 export default function Home() {
@@ -49,6 +59,7 @@ export default function Home() {
   const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSentInbox, setIsSentInbox] = useState<boolean>(false)
 
   const handleDietaryChange = (data: {
     vegan: boolean;
@@ -63,6 +74,8 @@ export default function Home() {
       width: "w-60",
       type: "button",
       label: "Send recipe to my inbox",
+      onInboxBtn: () => setIsSentInbox(true)
+      
     },
     {
       width: "w-60",
@@ -70,6 +83,8 @@ export default function Home() {
       label: "I want another recipe",
       onClick: () => setIsElementVisible(true),
       onRemoveImage: () => setImage(""),
+      onInboxBtn: () => setIsSentInbox(false)
+      
     },
   ];
 
@@ -107,6 +122,19 @@ export default function Home() {
         other: { checked: false, text: "" },
       });
       setCountry("");
+
+ 
+      
+
+
+      
+      // await transporter.sendMail(options);
+   
+
+
+    
+
+      
       setResetKey((prev) => prev + 1); // Trigger Fieldset reset
     } catch (error) {
       console.error(error);
@@ -196,16 +224,19 @@ export default function Home() {
           {/* Show recipe when not loading and form is hidden */}
           {!isElementVisible && !isLoading && (
             <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full">
-              <CardContent className="flex justify-center flex-col items-center gap-0">
+              <CardContent className=" flex justify-center flex-col items-center gap-0">
                 <p className="h-1/3 w-125 border-2 border-black-500 rounded-2xl overflow-scroll">
                   {recipe}
                 </p>
                 <div className="flex flex-col gap-2 mt-40">
+              
                   {buttonsArray.map((button, index) => (
                     <Button
                       onClick={() => {
                         button.onClick?.();
                         button.onRemoveImage?.();
+                        button.onInboxBtn?.();
+                        button.onInboxBtn?.();
                       }}
                       key={index}
                       className={button.width}
@@ -214,9 +245,16 @@ export default function Home() {
                       {button.label}
                     </Button>
                   ))}
+             
                 </div>
                 <Audio/>
               </CardContent>
+              {isSentInbox && (<CardContent className="flex justify-center flex-col items-center gap-0">
+                <Input placeholder="enter a valid email" className="text-center" type="email"/>
+                <Button type="button">Send to my inbox</Button>
+
+              </CardContent>)}
+  
             </Card>
           )}
         </div>
