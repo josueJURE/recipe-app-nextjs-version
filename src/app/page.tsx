@@ -136,7 +136,7 @@ export default function Home() {
           />
       
           {isElementVisible && <h1 id="header" className="text-2xl font-bold text-center mb-6 my-7">
-            Unsure what to cook Let recipe for sucess inspire your next meal
+            Unsure what to cook? Let recipe for sucess inspire your next meal
             from any country in the world
           </h1>}
           <p className="text-center text-gray-600 mb-4">{country}</p>
