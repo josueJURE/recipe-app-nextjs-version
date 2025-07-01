@@ -1,15 +1,12 @@
-
-
-"use client"; 
+"use client";
 
 // components/ui folder
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import Fieldset from "@/components/ui/fieldset";
-import Audio  from "@/components/ui/audio";
+import Audio from "@/components/ui/audio";
 import { Card, CardContent } from "@/components/ui/card";
 import RecipeCardSkeleton from "@/components/ui/skeleton";
-
 
 // single map third-party library
 import {
@@ -19,18 +16,13 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 // nodemailer
-import { render } from '@react-email/components';
 
 //others
 import { Tooltip } from "react-tooltip";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
-
-
-
-
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -40,7 +32,7 @@ interface ButtonTypes {
   label: string;
   onClick?: () => void;
   onRemoveImage?: () => void;
-  onInboxBtn? : () => void
+  onInboxBtn?: () => void;
 }
 
 export default function Home() {
@@ -59,7 +51,8 @@ export default function Home() {
   const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isSentInbox, setIsSentInbox] = useState<boolean>(false)
+  const [isSentInbox, setIsSentInbox] = useState<boolean>(false);
+  const [userEmail, setUserEmail] = useState<string>("");
 
   const handleDietaryChange = (data: {
     vegan: boolean;
@@ -74,8 +67,7 @@ export default function Home() {
       width: "w-60",
       type: "button",
       label: "Send recipe to my inbox",
-      onInboxBtn: () => setIsSentInbox(true)
-      
+      onInboxBtn: () => setIsSentInbox(true),
     },
     {
       width: "w-60",
@@ -83,8 +75,7 @@ export default function Home() {
       label: "I want another recipe",
       onClick: () => setIsElementVisible(true),
       onRemoveImage: () => setImage(""),
-      onInboxBtn: () => setIsSentInbox(false)
-      
+      onInboxBtn: () => setIsSentInbox(false),
     },
   ];
 
@@ -94,7 +85,9 @@ export default function Home() {
       toast.error("select a country first");
       return;
     }
-   
+
+    console.log("userEmail: JJ", userEmail);
+
     setIsLoading(true); // Set loading to true when starting the request
     setIsElementVisible(false); // Hide the form immediately
 
@@ -113,9 +106,9 @@ export default function Home() {
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
       }
- 
+
       const data = await response.json();
-      setImage(data.recipeImage);
+      // setImage(data.recipeImage);
       setRecipe(data.recipe);
       setDietaryData({
         vegan: false,
@@ -123,18 +116,6 @@ export default function Home() {
       });
       setCountry("");
 
- 
-      
-
-
-      
-      // await transporter.sendMail(options);
-   
-
-
-    
-
-      
       setResetKey((prev) => prev + 1); // Trigger Fieldset reset
     } catch (error) {
       console.error(error);
@@ -162,11 +143,16 @@ export default function Home() {
               className: "mx-auto",
             }}
           />
-      
-          {isElementVisible && <h1 id="header" className="text-2xl font-bold text-center mb-6 my-7">
-            Unsure what to cook? Let recipe for sucess inspire your next meal
-            from any country in the world
-          </h1>}
+
+          {isElementVisible && (
+            <h1
+              id="header"
+              className="text-2xl font-bold text-center mb-6 my-7"
+            >
+              Unsure what to cook? Let recipe for sucess inspire your next meal
+              from any country in the world
+            </h1>
+          )}
           <p className="text-center text-gray-600 mb-4">{country}</p>
 
           <Tooltip id="country-tooltip" style={{ zIndex: 100 }}>
@@ -229,7 +215,6 @@ export default function Home() {
                   {recipe}
                 </p>
                 <div className="flex flex-col gap-2 mt-40">
-              
                   {buttonsArray.map((button, index) => (
                     <Button
                       onClick={() => {
@@ -245,16 +230,48 @@ export default function Home() {
                       {button.label}
                     </Button>
                   ))}
-             
                 </div>
-                <Audio/>
+                <Audio />
               </CardContent>
-              {isSentInbox && (<CardContent className="flex justify-center flex-col items-center gap-0">
-                <Input placeholder="enter a valid email" className="text-center" type="email"/>
-                <Button type="button">Send to my inbox</Button>
-
-              </CardContent>)}
-  
+              {isSentInbox && (
+                <CardContent className="flex justify-center flex-col items-center gap-0">
+                  <Input
+                    placeholder="enter a valid email"
+                    className="text-center"
+                    type="email"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                  />
+                  <Button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch("api/email/", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                          
+                            email: userEmail || "josue.jure@gmail.com",
+                          }),
+                        });
+                        if (!response.ok) {
+                          throw new Error("Failed to send email");
+                        }
+                        const result = await response.json();
+                        toast.success("an email was send to your inbox");
+                        console.log(result);
+                        setUserEmail("");
+                      } catch (error) {
+                        console.error(error);
+                      } 
+                    }}
+                  >
+                    Send to my inbox
+                  </Button>
+                </CardContent>
+              )}
             </Card>
           )}
         </div>
