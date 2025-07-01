@@ -15,16 +15,16 @@ export async function POST(request: Request) {
 
     // email user
     // can be called from an actual component. then going to use the resend here, which has been instanciated
-    if (email && recipe !== "") {
+  
       const emailResponse = await resend.emails.send({
         from: "Acme <onboarding@resend.dev>",
-        to: "josue.jure@gmail.com",
+        to: email,
         subject: "Your recipe",
         react: Welcome({ recipe }),
       });
 
       console.log("emailResponse:", emailResponse.error);
-    }
+    
 
     // Build the full prompt string
 
