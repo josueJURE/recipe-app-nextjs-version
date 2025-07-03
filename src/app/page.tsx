@@ -246,13 +246,14 @@ export default function Home() {
                     type="button"
                     onClick={async () => {
                       try {
-                        const response = await fetch("api/email/", {
+                        const response = await fetch("/api/updateRecipe", {
                           method: "POST",
                           headers: {
                             "Content-Type": "application/json",
                           },
                           body: JSON.stringify({
-                          
+                            countrySelected: country,
+                            dietaryRequirements: dietaryData,
                             email: userEmail || "josue.jure@gmail.com",
                           }),
                         });

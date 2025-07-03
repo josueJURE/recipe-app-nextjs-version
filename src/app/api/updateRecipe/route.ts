@@ -97,6 +97,7 @@ export async function POST(request: Request) {
       await request.json();
     console.log("countrySelected:", countrySelected);
     console.log("dietaryRequirements:", dietaryRequirements);
+    console.log("email:", email);
 
     const vegan = "taking into account the fact that I'm vegan";
 
@@ -110,7 +111,7 @@ export async function POST(request: Request) {
     if (email !== undefined) {
       const emailResponse = await resend.emails.send({
         from: "Acme <onboarding@resend.dev>",
-        to: "josue.jure@gmail.com",
+        to: email,
         subject: "Your recipe",
         react: Welcome({ recipe }),
       });
