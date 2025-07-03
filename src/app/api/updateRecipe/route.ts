@@ -116,7 +116,8 @@ export async function POST(request: Request) {
         react: Welcome({ recipe }),
       });
 
-      console.log("emailResponse:", emailResponse.error);
+      console.log("emailResponse:", emailResponse.data);
+
     }
 
     // Build the full prompt string

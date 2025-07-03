@@ -53,6 +53,14 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSentInbox, setIsSentInbox] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+
+  const handleCountrySelect = (countryName: string) => {
+    setCountry(countryName);
+    setSelectedCountry(countryName); // Store it in the preserved state
+  };
+
+
 
   const handleDietaryChange = (data: {
     vegan: boolean;
@@ -98,7 +106,7 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          countrySelected: country,
+          countrySelected: selectedCountry,
           dietaryRequirements: dietaryData,
         }),
       });
@@ -174,7 +182,7 @@ export default function Home() {
                         <Geography
                           pointerEvents="auto"
                           onClick={() => {
-                            setCountry(geo.properties.name);
+                            handleCountrySelect(geo.properties.name);
                           }}
                           key={geo.rsmKey}
                           geography={geo}
@@ -252,7 +260,7 @@ export default function Home() {
                             "Content-Type": "application/json",
                           },
                           body: JSON.stringify({
-                            countrySelected: country,
+                            countrySelected: selectedCountry,
                             dietaryRequirements: dietaryData,
                             email: userEmail || "josue.jure@gmail.com",
                           }),
@@ -266,7 +274,7 @@ export default function Home() {
                         setUserEmail("");
                       } catch (error) {
                         console.error(error);
-                      } 
+                      }
                     }}
                   >
                     Send to my inbox
