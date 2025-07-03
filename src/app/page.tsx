@@ -61,6 +61,29 @@ export default function Home() {
   };
 
 
+async function fetchData(
+  url: string,
+  selectedCountry: string,
+  dietaryData: { vegan: boolean; other: { checked: boolean; text: string } }
+) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      countrySelected: selectedCountry,
+      dietaryRequirements: dietaryData,
+    })
+  })
+  return response
+}
+  // Call fetchRecipeData if needed
+  // const response = await fetchRecipeData();
+
+
+
+
 
   const handleDietaryChange = (data: {
     vegan: boolean;
@@ -100,16 +123,19 @@ export default function Home() {
     setIsElementVisible(false); // Hide the form immediately
 
     try {
-      const response = await fetch("/api/updateRecipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          countrySelected: selectedCountry,
-          dietaryRequirements: dietaryData,
-        }),
-      });
+
+      const response = await fetchData("/api/updateRecipe", selectedCountry, dietaryData);
+
+      // const response = await fetch("/api/updateRecipe", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     countrySelected: selectedCountry,
+      //     dietaryRequirements: dietaryData,
+      //   }),
+      // });
 
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
