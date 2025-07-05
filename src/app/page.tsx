@@ -35,11 +35,13 @@ interface ButtonTypes {
   onInboxBtn?: () => void;
 }
 
+interface dietaryDataType {
+  vegan: boolean;
+  other: { checked: boolean; text: string };
+}
+
 export default function Home() {
-  const [dietaryData, setDietaryData] = useState<{
-    vegan: boolean;
-    other: { checked: boolean; text: string };
-  }>({
+  const [dietaryData, setDietaryData] = useState<dietaryDataType>({
     vegan: false,
     other: { checked: false, text: "" },
   });
@@ -57,38 +59,30 @@ export default function Home() {
 
   const handleCountrySelect = (countryName: string) => {
     setCountry(countryName);
-    setSelectedCountry(countryName); // Store it in the preserved state
+    setSelectedCountry(countryName);
   };
 
+  async function fetchData(
+    url: string,
+    selectedCountry: string,
+    dietaryData: dietaryDataType,
+    email?: string
+  ) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        countrySelected: selectedCountry,
+        dietaryRequirements: dietaryData,
+        email: email || "josue.jure@gmail.com",
+      }),
+    });
+    return response;
+  }
 
-async function fetchData(
-  url: string,
-  selectedCountry: string,
-  dietaryData: { vegan: boolean; other: { checked: boolean; text: string } }
-) {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      countrySelected: selectedCountry,
-      dietaryRequirements: dietaryData,
-    })
-  })
-  return response
-}
-  // Call fetchRecipeData if needed
-  // const response = await fetchRecipeData();
-
-
-
-
-
-  const handleDietaryChange = (data: {
-    vegan: boolean;
-    other: { checked: boolean; text: string };
-  }) => {
+  const handleDietaryChange = (data: dietaryDataType) => {
     setDietaryData(data);
     console.log("data:", data);
   };
@@ -117,25 +111,15 @@ async function fetchData(
       return;
     }
 
-    console.log("userEmail: JJ", userEmail);
-
-    setIsLoading(true); // Set loading to true when starting the request
-    setIsElementVisible(false); // Hide the form immediately
+    setIsLoading(true);
+    setIsElementVisible(false);
 
     try {
-
-      const response = await fetchData("/api/updateRecipe", selectedCountry, dietaryData);
-
-      // const response = await fetch("/api/updateRecipe", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     countrySelected: selectedCountry,
-      //     dietaryRequirements: dietaryData,
-      //   }),
-      // });
+      const response = await fetchData(
+        "/api/updateRecipe",
+        selectedCountry,
+        dietaryData
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
