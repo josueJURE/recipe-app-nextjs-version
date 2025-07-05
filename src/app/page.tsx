@@ -64,20 +64,14 @@ export default function Home() {
 
   async function fetchData(
     url: string,
-    selectedCountry: string,
-    dietaryData: dietaryDataType,
-    email?: string
+    body: Record<string, string | dietaryDataType>
   ) {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        countrySelected: selectedCountry,
-        dietaryRequirements: dietaryData,
-        email: email || "josue.jure@gmail.com",
-      }),
+      body: JSON.stringify(body),
     });
     return response;
   }
@@ -115,11 +109,10 @@ export default function Home() {
     setIsElementVisible(false);
 
     try {
-      const response = await fetchData(
-        "/api/updateRecipe",
-        selectedCountry,
-        dietaryData
-      );
+      const response = await fetchData("/api/updateRecipe", {
+        countrySelected: selectedCountry,
+        dietaryRequirements: dietaryData,
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
@@ -264,16 +257,10 @@ export default function Home() {
                     type="button"
                     onClick={async () => {
                       try {
-                        const response = await fetch("/api/updateRecipe", {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({
-                            countrySelected: selectedCountry,
-                            dietaryRequirements: dietaryData,
-                            email: userEmail || "josue.jure@gmail.com",
-                          }),
+                        const response = await fetchData("/api/updateRecipe", {
+                          countrySelected: selectedCountry,
+                          dietaryRequirements: dietaryData,
+                          email: userEmail || "josue.jure@gmail.com",
                         });
                         if (!response.ok) {
                           throw new Error("Failed to send email");
