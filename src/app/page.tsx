@@ -40,11 +40,15 @@ interface dietaryDataType {
   other: { checked: boolean; text: string };
 }
 
+const dietaryObject = {
+  vegan: false,
+  other: { checked: false, text: "" }
+
+}
+
 export default function Home() {
-  const [dietaryData, setDietaryData] = useState<dietaryDataType>({
-    vegan: false,
-    other: { checked: false, text: "" },
-  });
+  const [dietaryData, setDietaryData] = useState<dietaryDataType>(dietaryObject);
+
 
   const [resetKey, setResetKey] = useState(0);
   const [recipe, setRecipe] = useState<string>("");
@@ -118,13 +122,13 @@ export default function Home() {
         throw new Error("Failed to fetch recipe");
       }
 
+  
+
       const data = await response.json();
       // setImage(data.recipeImage);
+      console.log("emailId", data.emailId)
       setRecipe(data.recipe);
-      setDietaryData({
-        vegan: false,
-        other: { checked: false, text: "" },
-      });
+      setDietaryData(dietaryObject);
       setCountry("");
 
       setResetKey((prev) => prev + 1); // Trigger Fieldset reset
@@ -263,10 +267,16 @@ export default function Home() {
                           email: userEmail || "josue.jure@gmail.com",
                         });
                         if (!response.ok) {
-                          throw new Error("Failed to send email");
+                          throw new Error("Server error");
                         }
                         const result = await response.json();
-                        toast.success("an email was send to your inbox");
+                        if (result.emailId === "" || result.emailId === undefined) {
+                          toast.error("email wasn't sent, something has gone wrong");
+                        } else {
+                          toast.success("email was sent successfully")
+                        }
+                        console.log("emailId", result.emailId)
+                      
                         console.log(result);
                         setUserEmail("");
                       } catch (error) {
