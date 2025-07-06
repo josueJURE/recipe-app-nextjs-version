@@ -100,6 +100,7 @@ export async function POST(request: Request) {
     console.log("email:", email);
 
     const vegan = "taking into account the fact that I'm vegan";
+    let emailResponse 
 
     const otherText =
       dietaryRequirements.other.checked && dietaryRequirements.other.text !== ""
@@ -109,7 +110,7 @@ export async function POST(request: Request) {
     // email user
     // can be called from an actual component. then going to use the resend here, which has been instanciated
     if (email !== undefined) {
-      const emailResponse = await resend.emails.send({
+      emailResponse = await resend.emails.send({
         from: "Acme <onboarding@resend.dev>",
         to: email,
         subject: "Your recipe",
@@ -134,8 +135,12 @@ export async function POST(request: Request) {
     // console.log("recipeImage:", recipeImage);
     console.log("prompt recipe:", prompt);
     console.log("recipe", recipe);
+    console.log("emailResponse:", typeof emailResponse?.data?.id);
 
-    return NextResponse.json({ recipe });
+    let emailId = emailResponse?.data?.id
+
+    return NextResponse.json({ recipe, emailId });
+    // return NextResponse.json({ recipe });
   } catch (error) {
     console.error("Error generating recipe:", error);
     return NextResponse.json(
