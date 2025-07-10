@@ -7,6 +7,7 @@ import Fieldset from "@/components/ui/fieldset";
 import Audio from "@/components/ui/audio";
 import { Card, CardContent } from "@/components/ui/card";
 import RecipeCardSkeleton from "@/components/ui/skeleton";
+import { ApiResponse, ButtonTypes, DietaryDataType } from "@/utils/types";
 
 // single map third-party library
 import {
@@ -26,33 +27,23 @@ import { Input } from "@/components/ui/input";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
-interface ButtonTypes {
-  width: `w-${number}`;
-  type: "button";
-  label: string;
-  onClick?: () => void;
-  onRemoveImage?: () => void;
-  onInboxBtn?: () => void;
-}
 
-interface dietaryDataType {
-  vegan: boolean;
-  other: { checked: boolean; text: string };
-}
+
+
+
+
 
 const dietaryObject = {
   vegan: false,
-  other: { checked: false, text: "" }
-
-}
+  other: { checked: false, text: "" },
+};
 
 export default function Home() {
-  const [dietaryData, setDietaryData] = useState<dietaryDataType>(dietaryObject);
-
-
+  const [dietaryData, setDietaryData] =
+    useState<DietaryDataType>(dietaryObject);
   const [resetKey, setResetKey] = useState(0);
   const [recipe, setRecipe] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<string | undefined>("");
   const { isDarkMode } = useTheme();
   const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
@@ -68,8 +59,8 @@ export default function Home() {
 
   async function fetchData(
     url: string,
-    body: Record<string, string | dietaryDataType>
-  ) {
+    body: Record<string, string | DietaryDataType>
+  ): Promise<Response> {
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -80,7 +71,7 @@ export default function Home() {
     return response;
   }
 
-  const handleDietaryChange = (data: dietaryDataType) => {
+  const handleDietaryChange = (data: DietaryDataType) => {
     setDietaryData(data);
     console.log("data:", data);
   };
@@ -118,15 +109,14 @@ export default function Home() {
         dietaryRequirements: dietaryData,
       });
 
+      const data: ApiResponse = await response.json();
+
       if (!response.ok) {
         throw new Error("Failed to fetch recipe");
       }
 
-  
-
-      const data = await response.json();
-      // setImage(data.recipeImage);
-      console.log("emailId", data.emailId)
+      setImage(data.recipeImage);
+      console.log("emailId", data.emailId);
       setRecipe(data.recipe);
       setDietaryData(dietaryObject);
       setCountry("");
@@ -266,21 +256,26 @@ export default function Home() {
                           dietaryRequirements: dietaryData,
                           email: userEmail || "josue.jure@gmail.com",
                         });
+
+                        const result: ApiResponse = await response.json();
+
                         if (!response.ok) {
-                          throw new Error("Server error");
+                          throw new Error("Request failed");
                         }
-                        const result = await response.json();
-                        if (result.emailId === "" || result.emailId === undefined) {
-                          toast.error("email wasn't sent, something has gone wrong");
-                        } else {
-                          toast.success("email was sent successfully")
+
+                        if (userEmail) {
+                          result.emailId
+                            ? toast.success("Emial was sent successfully")
+                            : toast.error("Your email wasn't sent");
                         }
-                        console.log("emailId", result.emailId)
-                      
+
+                        console.log("emailId", result.emailId);
+
                         console.log(result);
-                        setUserEmail("");
                       } catch (error) {
                         console.error(error);
+                      } finally {
+                        setUserEmail("");
                       }
                     }}
                   >
