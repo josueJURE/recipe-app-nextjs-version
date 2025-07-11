@@ -6,7 +6,7 @@ export function RecipeCardSkeleton() {
       <CardContent className="flex justify-center flex-col items-center gap-0">
         {/* Recipe Text Skeleton (Scrollable Area) */}
         <div className="h-1/3 w-125 rounded-2xl overflow-hidden bg-gray-200 animate-pulse">
-          <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
+          <div className="h-300 w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
         </div>
 
         {/* Buttons Skeleton (Flex Column) */}
