@@ -27,12 +27,6 @@ import { Input } from "@/components/ui/input";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
-
-
-
-
-
-
 const dietaryObject = {
   vegan: false,
   other: { checked: false, text: "" },
@@ -115,7 +109,8 @@ export default function Home() {
         throw new Error("Failed to fetch recipe");
       }
 
-      setImage(data.recipeImage);
+   
+      console.log(data.recipeImage)
       console.log("emailId", data.emailId);
       setRecipe(data.recipe);
       setDietaryData(dietaryObject);
@@ -137,7 +132,7 @@ export default function Home() {
         id="form"
         className="w-full max-w-xl p-6 relative bg-gray-700 bg-[url('/path/to/image.jpg')] rounded-2xl"
         onSubmit={handleSubmit}
-        style={{ backgroundImage: `url('${image}')` }}
+        style={image ? { backgroundImage: `url('${image}')` } : undefined}
       >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch className="my-5" />
@@ -268,6 +263,8 @@ export default function Home() {
                             ? toast.success("Emial was sent successfully")
                             : toast.error("Your email wasn't sent");
                         }
+
+                        setImage(result.recipeImage);
 
                         console.log("emailId", result.emailId);
 
