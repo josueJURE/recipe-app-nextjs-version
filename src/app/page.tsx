@@ -445,7 +445,7 @@ export default function Home() {
     setErrorMessage(null);
 
     try {
-      const response = await fetchData("/api/updateRecipe", {
+      const response = await fetchData("/api/mock", {
         countrySelected: selectedCountry,
         dietaryRequirements: dietaryData,
       });

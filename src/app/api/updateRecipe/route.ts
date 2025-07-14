@@ -5,13 +5,26 @@ import { NextResponse } from "next/server";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { NextRequest } from "next/server";
+import { Resend } from "resend";
+import Welcome from "@/components/ui/Welcome/welcome";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+interface ApiResponse {
+
+  recipe: string;
+  emailId?: string;
+  error?: string;
+}
+
+
 
 
 
 export async function POST(req: NextRequest) {
   try {
-    const { countrySelected, dietaryRequirements } = await req.json();
-
+    const { countrySelected, dietaryRequirements, email } = await req.json();
+    let emailResponse
     const vegan = "taking into account the fact that I'm vegan";
     const otherText =
       dietaryRequirements?.other?.checked && dietaryRequirements?.other?.text
@@ -34,16 +47,35 @@ export async function POST(req: NextRequest) {
      
     });
 
+
+
+    
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
         for await (const part of response.textStream) {
-          controller.enqueue(encoder.encode(part));
+
+          console.log(part)
+          controller.enqueue(encoder.encode(part))
 
         }
         controller.close();
       },
     });
+
+  
+
+    if (email !== undefined) {
+      emailResponse = await resend.emails.send({
+        from: "Acme <onboarding@resend.dev>",
+        to: email,
+        subject: "Your recipe",
+        react: Welcome({ recipe }),
+      });
+
+      console.log("emailResponse:", emailResponse.data);
+
+    }
 
     // Streaming response as text
     return new Response(stream, {
@@ -242,3 +274,6 @@ export async function POST(req: NextRequest) {
 //     );
 //   }
 // }
+
+
+//
