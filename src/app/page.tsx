@@ -399,6 +399,8 @@ export default function Home() {
     setSelectedCountry(countryName);
   };
 
+  const folder = "mock";
+
   async function fetchData(
     url: string,
     body: Record<string, string | DietaryDataType>
@@ -445,7 +447,7 @@ export default function Home() {
     setErrorMessage(null);
 
     try {
-      const response = await fetchData("/api/mock", {
+      const response = await fetchData(`/api/${folder}`, {
         countrySelected: selectedCountry,
         dietaryRequirements: dietaryData,
       });
@@ -463,9 +465,8 @@ export default function Home() {
       const decoder = new TextDecoder();
       let done = false;
 
-
       while (!done) {
-      //  let stream = ""
+        //  let stream = ""
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
         let formattedChunk = "";
@@ -475,16 +476,15 @@ export default function Home() {
         // let trimmedString = chunk.toString().trim()
         // if  (/^\d/.test(trimmedString)) {
         //   formattedChunk += "\n- " + trimmedString;
-        //   console.log(true) 
+        //   console.log(true)
         // } else {
         //   console.log(false)
         //   formattedChunk += " " + trimmedString;
         // }
-      
-        
-        console.log(chunk)
+
+        console.log(chunk);
         // stream += chunk
-        setRecipe(prev => prev + chunk);
+        setRecipe((prev) => prev + chunk);
       }
 
       setDietaryData(dietaryObject);
@@ -612,7 +612,7 @@ export default function Home() {
                     type="button"
                     onClick={async () => {
                       try {
-                        const response = await fetchData("/api/updateRecipe", {
+                        const response = await fetchData(`/api/${folder}`, {
                           countrySelected: selectedCountry,
                           dietaryRequirements: dietaryData,
                           email: userEmail || "josue.jure@gmail.com",

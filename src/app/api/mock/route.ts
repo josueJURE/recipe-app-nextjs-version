@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import Welcome from "@/components/ui/Welcome/welcome";
+import { success } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -30,7 +31,25 @@ Instructions:
 export async function POST(req: NextRequest) {
   try {
     // Parse request body
-    const { email } = await req.json();
+    const { countrySelected, dietaryRequirements, email } = await req.json();
+
+    let emailResponse;
+
+    if (email) {
+      console.log("Handling email request for:", email);
+      emailResponse = await resend.emails.send({
+        from: "Acme <onboarding@resend.dev>",
+        to: email,
+        subject: "Your Recipe",
+        react: Welcome({ recipe: staticRecipe }),
+      });
+      console.log("Email sent. Response:", emailResponse?.data);
+
+      return NextResponse.json({
+        success: true,
+        emailId: emailResponse?.data?.id ?? null,
+      });
+    }
 
     // Simulate streaming by splitting into lines
     const lines = staticRecipe.split("\n");
@@ -40,6 +59,7 @@ export async function POST(req: NextRequest) {
     const stream = new ReadableStream({
       async start(controller) {
         for (const line of lines) {
+          console.log("line:", line);
           controller.enqueue(encoder.encode(line + "\n"));
           // optional delay if you want to simulate typing:
           await new Promise((res) => setTimeout(res, 100));
@@ -47,16 +67,6 @@ export async function POST(req: NextRequest) {
         controller.close();
       },
     });
-
-    // Optionally handle email sending
-    if (email) {
-      await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
-        to: email,
-        subject: "Your Recipe",
-        react: Welcome({ recipe: staticRecipe }),
-      });
-    }
 
     // Return the streaming response
     return new Response(stream, {
@@ -72,4 +82,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
