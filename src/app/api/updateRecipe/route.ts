@@ -1,6 +1,3 @@
-
-
-
 import { NextResponse } from "next/server";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
@@ -11,20 +8,34 @@ import Welcome from "@/components/ui/Welcome/welcome";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface ApiResponse {
-
   recipe: string;
   emailId?: string;
   error?: string;
 }
 
-
-
-
+let recipe = ""
 
 export async function POST(req: NextRequest) {
   try {
     const { countrySelected, dietaryRequirements, email } = await req.json();
-    let emailResponse
+
+    if (email) {
+      const emailResponse = await resend.emails.send({
+        from: "Acme <onboarding@resend.dev>",
+        to: email,
+        subject: "Your recipe",
+        react: Welcome({ recipe }),
+      });
+
+      console.log("emailResponse:", emailResponse.data);
+
+      let emailId = emailResponse.data?.id;
+
+      return NextResponse.json({
+        emailId,
+      });
+    }
+
     const vegan = "taking into account the fact that I'm vegan";
     const otherText =
       dietaryRequirements?.other?.checked && dietaryRequirements?.other?.text
@@ -44,38 +55,20 @@ export async function POST(req: NextRequest) {
         },
       ],
       maxTokens: 1000,
-     
     });
 
-
-
-    
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
         for await (const part of response.textStream) {
-
-          console.log(part)
-          controller.enqueue(encoder.encode(part))
-
+          recipe += part
+          console.log(part);
+          console.log("recipe:", recipe)
+          controller.enqueue(encoder.encode(part));
         }
         controller.close();
       },
     });
-
-  
-
-    if (email !== undefined) {
-      emailResponse = await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
-        to: email,
-        subject: "Your recipe",
-        react: Welcome({ recipe }),
-      });
-
-      console.log("emailResponse:", emailResponse.data);
-
-    }
 
     // Streaming response as text
     return new Response(stream, {
@@ -274,6 +267,5 @@ export async function POST(req: NextRequest) {
 //     );
 //   }
 // }
-
 
 //
