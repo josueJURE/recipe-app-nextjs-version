@@ -53,12 +53,7 @@ export async function POST(req: NextRequest) {
     }. ${otherText}. Include ingredients and step-by-step instructions.`;
 
 
-const result = await openaiImage.images.generate({
-  model: "dall-e-3",
-  prompt: recipe,
-  n: 1,
-  size: "1024x1024",
-});
+
 
     const response = await streamText({
       model: openai("gpt-3.5-turbo"),
@@ -68,7 +63,7 @@ const result = await openaiImage.images.generate({
           content: prompt,
         },
       ],
-      maxTokens: 100,
+      maxTokens: 1000,
     });
 
     const encoder = new TextEncoder();
@@ -81,6 +76,14 @@ const result = await openaiImage.images.generate({
           controller.enqueue(encoder.encode(part));
         }
         controller.close();
+        let recipeForImage = recipe
+        const result = await openaiImage.images.generate({
+          model: "dall-e-3",
+          prompt: recipeForImage,
+          n: 1,
+          size: "1024x1024",
+        });
+        console.log("openaiImage",result)
       },
     });
 
