@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     if (email) {
       const emailResponse = await resend.emails.send({
-        from: "Acme <onboarding@resend.dev>",
+        from: "",
         to: email,
         subject: "Your recipe",
         react: Welcome({ recipe }),
