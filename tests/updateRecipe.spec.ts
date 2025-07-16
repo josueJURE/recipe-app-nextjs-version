@@ -25,7 +25,8 @@ test.describe('POST /api/updateRecipe', () => {
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(200);
 
-    const json = await response.json();
-    expect(json).toHaveProperty('recipe');
+    const text = await response.text();
+    expect(text).toContain("Vegan and Gluten-Free Eggplant Parmesan")
+  
   });
 });
