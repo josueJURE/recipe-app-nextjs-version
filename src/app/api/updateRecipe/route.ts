@@ -4,6 +4,12 @@ import { streamText } from "ai";
 import { NextRequest } from "next/server";
 import { Resend } from "resend";
 import Welcome from "@/components/ui/Welcome/welcome";
+import OpenAI from "openai";
+
+
+const openaiImage = new OpenAI();
+
+
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -46,6 +52,14 @@ export async function POST(req: NextRequest) {
       dietaryRequirements?.vegan ? vegan : ""
     }. ${otherText}. Include ingredients and step-by-step instructions.`;
 
+
+const result = await openaiImage.images.generate({
+  model: "dall-e-3",
+  prompt: recipe,
+  n: 1,
+  size: "1024x1024",
+});
+
     const response = await streamText({
       model: openai("gpt-3.5-turbo"),
       messages: [
@@ -54,7 +68,7 @@ export async function POST(req: NextRequest) {
           content: prompt,
         },
       ],
-      maxTokens: 1000,
+      maxTokens: 100,
     });
 
     const encoder = new TextEncoder();
@@ -76,6 +90,12 @@ export async function POST(req: NextRequest) {
         "Content-Type": "text/plain; charset=utf-8",
       },
     });
+
+
+
+
+
+
   } catch (error) {
     console.error("Error generating recipe:", error);
     return NextResponse.json(
