@@ -11,8 +11,8 @@ test.beforeEach(async ({ page }: PageType) => {
 
 test.describe("Home page", () => {
   test("dear dev: should have correct metadata", async ({ page }: PageType) => {
-    await expect(page.locator('#header')).toHaveText(
-      "Unsure what to cook? Let recipe for sucess inspire your next meal from any country in the world"
+    await expect(page.locator('h1')).toHaveText(
+      "Unsure what to cook? Let recipe for success inspire your next meal from any country in the world"
     );
   });
 });
