@@ -27,6 +27,7 @@ jobs:
         run: npx playwright test
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
       - uses: actions/upload-artifact@v4
         if: always()
