@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import Welcome from "@/components/ui/Welcome/welcome";
-import { success } from "zod";
+
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
