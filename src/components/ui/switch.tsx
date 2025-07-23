@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
-import { useState } from "react";
 import { useTheme } from "@/context/theme-context";
 
 import { cn } from "@/lib/utils";
