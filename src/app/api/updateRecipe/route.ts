@@ -35,11 +35,11 @@ export async function POST(req: NextRequest) {
 
       console.log("emailResponse:", emailResponse.data);
 
-      let emailId = emailResponse.data?.id;
+      const emailId = emailResponse.data?.id;
 
       return NextResponse.json({
         emailId,
-      });
+      } as ApiResponse);
     }
 
     const vegan = "taking into account the fact that I'm vegan";
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
           controller.enqueue(encoder.encode(part));
         }
         controller.close();
-        let recipeForImage = recipe
+        const recipeForImage = recipe
         const result = await openaiImage.images.generate({
           model: "dall-e-3",
           prompt: recipeForImage,
