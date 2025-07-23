@@ -118,7 +118,7 @@ export default function Home() {
         //  let stream = ""
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
-        let formattedChunk = "";
+        // let formattedChunk = "";
         const chunk = decoder.decode(value).split("-");
         // const chunk = decoder.decode(value).split("-");
         // console.log("chunk.toString().trim():", chunk.toString().trim())
@@ -270,9 +270,11 @@ export default function Home() {
                         if (!response.ok)
                           throw new Error(result.error || "Request failed");
                         if (userEmail) {
-                          result.emailId
-                            ? toast.success("Email was sent successfully!")
-                            : toast.error("Your email wasn't sent.");
+                          if (result.emailId) {
+                            toast.success("Email was sent successfully!");
+                          } else {
+                            toast.error("Your email wasn't sent.");
+                          }
                         }
                         setImage(result.recipeImage);
                       } catch (error) {
@@ -293,9 +295,6 @@ export default function Home() {
     </main>
   );
 }
-
-
-
 
 // "use client";
 
@@ -647,4 +646,3 @@ export default function Home() {
 //     </main>
 //   );
 // }
-
