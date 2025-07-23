@@ -37,11 +37,11 @@ function Audio() {
   }, []);
 
 
-  const handleAudioButtons = (option: string) => {
-    if (wavesurfer) {
-      (wavesurfer as any)[option](); // Type assertion to any
-    }
-  };
+  // const handleAudioButtons = (option: string) => {
+  //   if (wavesurfer) {
+  //     (wavesurfer as any)[option](); // Type assertion to any
+  //   }
+  // };
 
 
 
@@ -57,12 +57,12 @@ function Audio() {
     }
   };
 
-  const handlePlay = () => {
-    if (wavesurfer) {
-      wavesurfer.play();
-      console.log("play");
-    }
-  };
+  // const handlePlay = () => {
+  //   if (wavesurfer) {
+  //     wavesurfer.play();
+  //     console.log("play");
+  //   }
+  // };
 
   const handleSkipForward = () => {
     if (wavesurfer) {
