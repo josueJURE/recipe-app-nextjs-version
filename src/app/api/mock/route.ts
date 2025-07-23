@@ -31,7 +31,7 @@ Instructions:
 export async function POST(req: NextRequest) {
   try {
     // Parse request body
-    const { countrySelected, dietaryRequirements, email } = await req.json();
+    const {email } = await req.json();
 
     let emailResponse;
 
