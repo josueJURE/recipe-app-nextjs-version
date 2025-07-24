@@ -7,7 +7,7 @@
     "test:ui": "npx playwright test --ui",
     "dev": "NODE_ENV=development next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT -H 0.0.0.0",
     "lint": "next lint",
     "email": "email dev --dir src/components/ui/Email"
   },
