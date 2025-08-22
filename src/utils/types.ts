@@ -14,7 +14,17 @@ export interface ApiResponse {
     onInboxBtn?: () => void;
   }
 
- export  interface DietaryDataType {
+ export interface DietaryDataType {
     vegan: boolean;
     other: { checked: boolean; text: string };
   }
+
+  export interface MapProps {
+    handleCountrySelect: (countryName: string) => void;
+    isDarkMode: boolean;
+  }
+  
+  export interface GeographyFeature {
+      rsmKey: string;
+      properties: Record<string, string>;
+    }

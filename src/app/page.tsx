@@ -8,12 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import RecipeCardSkeleton from "@/components/ui/skeleton";
 import { ButtonTypes, DietaryDataType } from "@/utils/types";
 
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
+import Map from "@/components/map"
 
 import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
@@ -21,7 +16,7 @@ import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
+
 
 const dietaryObject = {
   vegan: false,
@@ -48,7 +43,7 @@ export default function Home() {
     setSelectedCountry(countryName);
   };
 
-  const folder = "updateRecipe"; // updateRecipe or mock to switch backend
+  const folder = "mock"; // updateRecipe or mock to switch backend
 
   async function fetchData(
     url: string,
@@ -177,30 +172,13 @@ export default function Home() {
                   resetKey={resetKey}
                 />
 
-                <ComposableMap>
-                  <ZoomableGroup zoom={1}>
-                    <Geographies geography={geoUrl}>
-                      {({ geographies }) =>
-                        geographies.map((geo) => (
-                          <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            onClick={() =>
-                              handleCountrySelect(geo.properties.name)
-                            }
-                            fill={isDarkMode ? "#374151" : "#EAEAEC"}
-                            stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
-                            style={{
-                              default: { outline: "none" },
-                              hover: { fill: "#F53" },
-                              pressed: { fill: "#E42" },
-                            }}
-                          />
-                        ))
-                      }
-                    </Geographies>
-                  </ZoomableGroup>
-                </ComposableMap>
+                <Map
+                 handleCountrySelect={handleCountrySelect}
+                 isDarkMode={isDarkMode}
+                
+                />
+
+      
 
                 <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
