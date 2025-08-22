@@ -16,7 +16,7 @@ import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
+
 
 const dietaryObject = {
   vegan: false,
@@ -178,30 +178,7 @@ export default function Home() {
                 
                 />
 
-                {/* <ComposableMap>
-                  <ZoomableGroup zoom={1}>
-                    <Geographies geography={geoUrl}>
-                      {({ geographies }) =>
-                        geographies.map((geo) => (
-                          <Geography
-                            key={geo.rsmKey}
-                            geography={geo}
-                            onClick={() =>
-                              handleCountrySelect(geo.properties.name)
-                            }
-                            fill={isDarkMode ? "#374151" : "#EAEAEC"}
-                            stroke={isDarkMode ? "#4B5563" : "#D6D6DA"}
-                            style={{
-                              default: { outline: "none" },
-                              hover: { fill: "#F53" },
-                              pressed: { fill: "#E42" },
-                            }}
-                          />
-                        ))
-                      }
-                    </Geographies>
-                  </ZoomableGroup>
-                </ComposableMap> */}
+      
 
                 <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}

@@ -5,10 +5,7 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 
-interface MapProps {
-  handleCountrySelect: (countryName: string) => void;
-  isDarkMode: boolean;
-}
+import { MapProps, GeographyFeature } from "@/utils/types";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
@@ -17,7 +14,7 @@ function Map({ handleCountrySelect, isDarkMode }: MapProps) {
     <ComposableMap>
       <ZoomableGroup zoom={1}>
         <Geographies geography={geoUrl}>
-          {({ geographies }) =>
+          {({ geographies }: { geographies: GeographyFeature[] }) =>
             geographies.map((geo) => (
               <Geography
                 key={geo.rsmKey}
