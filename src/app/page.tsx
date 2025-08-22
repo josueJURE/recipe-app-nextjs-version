@@ -8,12 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import RecipeCardSkeleton from "@/components/ui/skeleton";
 import { ButtonTypes, DietaryDataType } from "@/utils/types";
 
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
+import Map from "@/components/map"
 
 import { Tooltip } from "react-tooltip";
 import React, { useState } from "react";
@@ -48,7 +43,7 @@ export default function Home() {
     setSelectedCountry(countryName);
   };
 
-  const folder = "updateRecipe"; // updateRecipe or mock to switch backend
+  const folder = "mock"; // updateRecipe or mock to switch backend
 
   async function fetchData(
     url: string,
@@ -177,7 +172,13 @@ export default function Home() {
                   resetKey={resetKey}
                 />
 
-                <ComposableMap>
+                <Map
+                 handleCountrySelect={handleCountrySelect}
+                 isDarkMode={isDarkMode}
+                
+                />
+
+                {/* <ComposableMap>
                   <ZoomableGroup zoom={1}>
                     <Geographies geography={geoUrl}>
                       {({ geographies }) =>
@@ -200,7 +201,7 @@ export default function Home() {
                       }
                     </Geographies>
                   </ZoomableGroup>
-                </ComposableMap>
+                </ComposableMap> */}
 
                 <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
