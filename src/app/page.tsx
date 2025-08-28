@@ -8,15 +8,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import RecipeCardSkeleton from "@/components/ui/skeleton";
 import { ButtonTypes, DietaryDataType } from "@/utils/types";
 
-import Map from "@/components/map"
+import Map from "@/components/map";
 
 import { Tooltip } from "react-tooltip";
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
-
-
 
 const dietaryObject = {
   vegan: false,
@@ -31,7 +29,7 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [image, setImage] = useState<string | undefined>("");
   const { isDarkMode } = useTheme();
-  const [country, setCountry] = useState<string>("");
+  // const [country, setCountry] = useState<string>("");
   const [isElementVisible, setIsElementVisible] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSentInbox, setIsSentInbox] = useState<boolean>(false);
@@ -39,7 +37,7 @@ export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState<string>("");
 
   const handleCountrySelect = (countryName: string) => {
-    setCountry(countryName);
+    // setCountry(countryName);
     setSelectedCountry(countryName);
   };
 
@@ -80,7 +78,7 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
 
-    if (!country) {
+    if (!selectedCountry) {
       toast.error("Please select a country first!");
       return;
     }
@@ -108,10 +106,14 @@ export default function Home() {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let done = false;
+      let count = 0;
 
       while (!done) {
         //  let stream = ""
+
         const { value, done: doneReading } = await reader.read();
+
+        count += 1
         done = doneReading;
         // let formattedChunk = "";
         const chunk = decoder.decode(value).split("-");
@@ -126,13 +128,25 @@ export default function Home() {
         //   formattedChunk += " " + trimmedString;
         // }
 
+        console.log("count", count)
+
         console.log(chunk);
         // stream += chunk
         setRecipe((prev) => prev + chunk);
       }
 
+      // let fullRecipe = "";
+      // while (!done) {
+      //   const { value, done: doneReading } = await reader.read();
+      //   done = doneReading;
+      //   if (value) {
+      //     fullRecipe += decoder.decode(value);
+      //   }
+      // }
+      // setRecipe(fullRecipe);
+
       setDietaryData(dietaryObject);
-      setCountry("");
+      // setCountry("");
       setResetKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);
@@ -161,9 +175,9 @@ export default function Home() {
                 Unsure what to cook? Let recipe for success inspire your next
                 meal from any country in the world
               </h1>
-              <p className="text-center text-gray-600 mb-4">{country}</p>
+              <p className="text-center text-gray-600 mb-4">{selectedCountry}</p>
               <Tooltip id="country-tooltip" className="z-[100]">
-                {country}
+                {selectedCountry}
               </Tooltip>
 
               <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -173,12 +187,9 @@ export default function Home() {
                 />
 
                 <Map
-                 handleCountrySelect={handleCountrySelect}
-                 isDarkMode={isDarkMode}
-                
+                  handleCountrySelect={handleCountrySelect}
+                  isDarkMode={isDarkMode}
                 />
-
-      
 
                 <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
