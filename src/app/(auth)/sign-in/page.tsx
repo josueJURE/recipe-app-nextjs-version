@@ -3,8 +3,8 @@ import LoginForm from "@/components/login-form"
 
 function SingIn() {
   return (
-    <div>Sign in</div>
-    // <LoginForm/>
+    // <div>Sign in</div>
+    <LoginForm/>
   )
 }
 
