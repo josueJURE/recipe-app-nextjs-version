@@ -38,7 +38,7 @@ export default function RootLayout({
       >
    
         {children}
-        <LoginForm/>
+    {/* <LoginForm/>     */}
         
       </body>
     </html>
