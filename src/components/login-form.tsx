@@ -9,13 +9,19 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { RegisterFormWithHook } from "@/utils/types"
+
+type LoginFormProps = React.ComponentProps<"form"> & {
+  register: (name: keyof RegisterFormWithHook) => any;
+};
 
 export default function LoginForm({
   className,
+  register,
   ...props
-}: React.ComponentProps<"div">) {
+}: LoginFormProps) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <form className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
@@ -24,7 +30,7 @@ export default function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <div>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
@@ -59,6 +65,7 @@ export default function LoginForm({
                     type="email"
                     placeholder="m@example.com"
                     required
+                    {...register("email")}
                   />
                 </div>
                 <div className="grid gap-3">
@@ -71,7 +78,7 @@ export default function LoginForm({
                       Forgot your password?
                     </a>
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input id="password" type="password" required {...register("password")} />
                 </div>
                 <Button type="submit" className="w-full">
                   Login
@@ -84,13 +91,13 @@ export default function LoginForm({
                 </a>
               </div>
             </div>
-          </form>
+          </div>
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
       </div>
-    </div>
+    </form>
   )
 }

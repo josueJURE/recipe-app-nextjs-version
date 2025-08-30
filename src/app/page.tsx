@@ -131,7 +131,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full flex items-center justify-center p-4">
-      {/* <form
+      <form
         id="form"
         className="w-full max-w-xl p-6 relative bg-gray-700 rounded-2xl"
         onSubmit={handleSubmit}
@@ -254,8 +254,8 @@ export default function Home() {
             </Card>
           )}
         </div>
-      </form> */}
-      <LoginForm />
+      </form>
+      {/* <LoginForm /> */}
     </main>
   );
 }

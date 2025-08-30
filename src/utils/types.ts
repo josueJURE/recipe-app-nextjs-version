@@ -1,3 +1,17 @@
+// types/forms.ts
+import { z } from "zod";
+import registerFormSchema from "@/lib/validation-schemas";
+
+// ✅ inferred type from schema
+export type RegisterFormValues = z.infer<typeof registerFormSchema>;
+
+// ✅ extend with register prop for RHF
+export type RegisterFormWithHook = RegisterFormValues & {
+  register?: (name: string) => void;
+};
+
+
+
 export interface ApiResponse {
     recipe: string;
     emailId?: string;
