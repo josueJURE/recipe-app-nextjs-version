@@ -166,24 +166,18 @@ export default function Home() {
                 {country}
               </Tooltip>
 
-              <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <Fieldset
                   onDietaryChange={handleDietaryChange}
                   resetKey={resetKey}
                 />
-
+                <br/>
                 <Map
-                 handleCountrySelect={handleCountrySelect}
-                 isDarkMode={isDarkMode}
-                
+                handleCountrySelect={handleCountrySelect}
+                isDarkMode={isDarkMode}
                 />
-
-      
-
                 <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
                 </Button>
-              </Card>
             </>
           )}
 
