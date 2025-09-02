@@ -3,7 +3,7 @@ import { z } from "zod";
 import registerFormSchema from "@/lib/validation-schemas";
 
 // ✅ inferred type from schema
-export type RegisterFormValues = z.infer<typeof registerFormSchema>;
+type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 // ✅ extend with register prop for RHF
 export type RegisterFormWithHook = RegisterFormValues & {

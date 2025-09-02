@@ -11,8 +11,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RegisterFormWithHook } from "@/utils/types"
 
+
+
 type LoginFormProps = React.ComponentProps<"form"> & {
-  register: (name: keyof RegisterFormWithHook) => any;
+  register: (name: keyof RegisterFormWithHook) => any ;
 };
 
 export default function LoginForm({

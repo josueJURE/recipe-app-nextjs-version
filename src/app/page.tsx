@@ -75,6 +75,7 @@ export default function Home() {
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
+    {console.log("selectedCountry",selectedCountry)}
     e.preventDefault();
 
     if (!selectedCountry) {
@@ -119,6 +120,8 @@ export default function Home() {
 
       setDietaryData(dietaryObject);
 
+      console.log(selectedCountry)
+
       setResetKey((prev) => prev + 1);
     } catch (error) {
       console.error(error);
@@ -143,13 +146,14 @@ export default function Home() {
 
           {isElementVisible && (
             <>
-              <h1 className="text-2xl font-bold text-center mb-6 my-7">
+              {/* <h1 className="text-2xl font-bold text-center mb-6 my-7">
                 Unsure what to cook? Let recipe for success inspire your next
                 meal from any country in the world
-              </h1>
+              </h1> */}
               <p className="text-center text-gray-600 mb-4">{selectedCountry}</p>
               <Tooltip id="country-tooltip" className="z-[100]">
                 {selectedCountry}
+               
               </Tooltip>
 
               <Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
