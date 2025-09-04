@@ -1,6 +1,10 @@
+
+
 import { MapProps } from "@/utils/types";
 
 import World from "@react-map/world";
+
+
 
 function Map({ handleCountrySelect, isDarkMode }: MapProps) {
   return (
@@ -14,7 +18,7 @@ function Map({ handleCountrySelect, isDarkMode }: MapProps) {
       onSelect={(state) => {
         handleCountrySelect(state ?? "");
       }}
-    />
+      />
   );
 }
 

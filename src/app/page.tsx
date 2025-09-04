@@ -161,10 +161,8 @@ export default function Home() {
                 Unsure what to cook? Let recipe for success inspire your next
                 meal from any country in the world
               </h1>
-              <p className="text-center text-gray-600 mb-4">{country}</p>
-              <Tooltip id="country-tooltip" className="z-[100]">
-                {country}
-              </Tooltip>
+              <p className="text-center text-gray-600 mb-4">{country == "" ? "" : "You've selected " + country}</p>
+            
 
                 <Fieldset
                   onDietaryChange={handleDietaryChange}
