@@ -1,15 +1,6 @@
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
-
-import { MapProps, GeographyFeature } from "@/utils/types";
+import { MapProps } from "@/utils/types";
 
 import World from "@react-map/world";
-
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
 
 function Map({ handleCountrySelect, isDarkMode }: MapProps) {
   return (
@@ -23,7 +14,7 @@ function Map({ handleCountrySelect, isDarkMode }: MapProps) {
       onSelect={(state) => {
         handleCountrySelect(state ?? "");
       }}
-      />
+    />
   );
 }
 
