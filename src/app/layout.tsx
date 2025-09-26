@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/theme-context";
 import LoginForm from "@/components/login-form"
 import Navbar from "@/components/navbar";
+import { Toaster } from "sonner";
 
 
 
@@ -38,6 +39,7 @@ export default function RootLayout({
       >
    
         {children}
+        <Toaster/>
     {/* <LoginForm/>     */}
         
       </body>

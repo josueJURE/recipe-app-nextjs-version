@@ -24,10 +24,12 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
+//  
 
 // import { PhoneInput } from '@/components/ui/phone-input'
 
 import registerFormSchema  from '@/lib/validation-schemas'
+import { authClient } from '@/lib/auth-client'
 
 
 
@@ -46,7 +48,40 @@ export default function Register() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Assuming an async registration function
+    const { name, email, password } = values;
+    const { data, error } = await authClient.signUp.email({
+      name: name || '',
+      email,
+      password,
+      image: "",
+      callbackURL: "/sign-in",
+    },
+
+    {
+      onRequest: (ctx) => {
+        alert("please wait")
+        // toast({
+        //   description: "Scheduled: Catch up on Friday 10th of December"
+
+        // })
+
+        // show loading
+      },
+      onSuccess: (ctx) => {
+        form.reset()
+        // redirect to the dashboard
+      
+
+      },
+      onError: (ctx) => {
+        alert(ctx.error.message)
+
+      },
+
+    }
+  
+  
+  );
       console.log("values", values)
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
