@@ -27,7 +27,7 @@ export default function SignIn() {
     const { data, error } = await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/dashboard",
+      callbackURL: "/recipe-ui",
     }, {
       onRequest: () => {
       
