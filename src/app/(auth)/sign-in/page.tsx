@@ -37,7 +37,7 @@ export default function SignIn() {
         form.reset()
       },
       onError: (ctx) => {
-        alert(ctx.error.message);
+        toast(ctx.error.message)
       },
     });
   }
