@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+import Link from "next/link";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -13,84 +13,74 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form' // Ensure this path is correct or adjust it to the actual location of the 'form' component.
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/form"; // Ensure this path is correct or adjust it to the actual location of the 'form' component.
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { PasswordInput } from '@/components/ui/password-input'
-//  
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
+//
 
 // import { PhoneInput } from '@/components/ui/phone-input'
 
-import registerFormSchema  from '@/lib/validation-schemas'
-import { authClient } from '@/lib/auth-client'
+import { registerFormSchema } from "@/lib/validation-schemas";
+import { authClient } from "@/lib/auth-client";
 
-
-
-const formSchema = registerFormSchema
+const formSchema = registerFormSchema;
 
 export default function Register() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-    const { name, email, password } = values;
-    const { data, error } = await authClient.signUp.email({
-      name: name || '',
-      email,
-      password,
-      image: "",
-      callbackURL: "/sign-in",
-    },
+      const { name, email, password } = values;
+      const { data, error } = await authClient.signUp.email(
+        {
+          name: name || "",
+          email,
+          password,
+          image: "",
+          callbackURL: "/sign-in",
+        },
 
-    {
-      onRequest: (ctx) => {
-        alert("please wait")
-        // toast({
-        //   description: "Scheduled: Catch up on Friday 10th of December"
+        {
+          onRequest: (ctx) => {
+            toast("Please wait while we processing your registration");
 
-        // })
-
-        // show loading
-      },
-      onSuccess: (ctx) => {
-        form.reset()
-        // redirect to the dashboard
+            // show loading
+          },
+          onSuccess: (ctx) => {
+            form.reset();
+            // redirect to the dashboard
+          },
+          onError: (ctx) => {
+            alert(ctx.error.message);
+          },
+        }
+      );
+      console.log("values", values);
       
-
-      },
-      onError: (ctx) => {
-        alert(ctx.error.message)
-
-      },
-
-    }
-  
-  
-  );
-      console.log("values", values)
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="tex-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>,
-      )
+      // toast(
+      //   <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+      //     <code className="tex-white">{JSON.stringify(values, null, 2)}</code>
+      //   </pre>
+      // );
     } catch (error) {
-      console.error('Form submission error', error)
-      toast.error('Failed to submit the form. Please try again.')
+      console.error("Form submission error", error);
+      toast.error("Failed to submit the form. Please try again.");
     }
   }
 
@@ -144,7 +134,6 @@ export default function Register() {
                 />
 
                 {/* Phone Field */}
-           
 
                 {/* Password Field */}
                 <FormField
@@ -195,7 +184,7 @@ export default function Register() {
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link href="/sign-in" className="underline">
               Login
             </Link>
@@ -203,5 +192,5 @@ export default function Register() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
