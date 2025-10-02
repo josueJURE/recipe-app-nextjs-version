@@ -87,9 +87,9 @@ export default function Register() {
   return (
     <div className="flex min-h-[60vh] h-full w-full items-center justify-center px-4">
       <Card className="mx-auto max-w-sm">
-        <CardHeader>
+        <CardHeader className="text-center items-center justify-center">
           <CardTitle className="text-2xl">Register</CardTitle>
-          <CardDescription>
+          <CardDescription className="whitespace-nowrap">
             Create a new account by filling out the form below.
           </CardDescription>
         </CardHeader>
