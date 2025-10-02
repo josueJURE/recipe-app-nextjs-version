@@ -11,21 +11,30 @@ import { ButtonTypes, DietaryDataType } from "@/utils/types";
 import Map from "@/components/map";
 
 import { Tooltip } from "react-tooltip";
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
+
+interface RecipeUIProps {
+  email: string;
+  name: string;
+
+  // id: string;
+  // createdAt: Date;
+  // updatedAt: Date;
+  // email: string;
+  // emailVerified: boolean;
+  // name: string;
+  // image?: string | null | undefined | undefined;
+}
 
 const dietaryObject = {
   vegan: false,
   other: { checked: false, text: "" },
 };
 
-interface RecipeUIProps {
-  user: string;
-}
-
-export default function RecipeUI({user}: RecipeUIProps) {
+export default function RecipeUI(userProps: RecipeUIProps) {
   const [dietaryData, setDietaryData] =
     useState<DietaryDataType>(dietaryObject);
   const [resetKey, setResetKey] = useState(0);
@@ -44,7 +53,8 @@ export default function RecipeUI({user}: RecipeUIProps) {
   };
 
   const folder = "mock"; // updateRecipe or mock to switch backend
-  console.log("user-client-side",  user)
+
+  console.log(userProps);
 
   async function fetchData(
     url: string,
@@ -148,7 +158,10 @@ export default function RecipeUI({user}: RecipeUIProps) {
       >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch className="my-5" />
+          <div><div>Welcome Back {userProps.name}</div>
+          </div>
           <Toaster position="bottom-center" />
+          
 
           {isElementVisible && (
             <>
