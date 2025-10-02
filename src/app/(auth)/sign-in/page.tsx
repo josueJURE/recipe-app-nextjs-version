@@ -46,7 +46,7 @@ export default function SignIn() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle>Sign In</CardTitle>
-        <CardDescription>
+        <CardDescription className="whitespace-nowrap">
           Welcome back! Please sign in to continue.
         </CardDescription>
       </CardHeader>

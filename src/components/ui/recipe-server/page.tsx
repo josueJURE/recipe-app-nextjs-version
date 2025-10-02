@@ -12,5 +12,6 @@ export default async function RecipePage() {
     redirect("/")
   }
 
-  return <RecipeUI  />
+//   return <RecipeUI name={session.user} />
+  return <RecipeUI />
 }
