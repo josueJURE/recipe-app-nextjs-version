@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 interface RecipeUIProps {
   email: string;
   name: string;
+  
+  
 
   // id: string;
   // createdAt: Date;

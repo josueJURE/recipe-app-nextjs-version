@@ -76,6 +76,7 @@ export default function RecipeUI({user}: RecipeUIProps) {
       onRemoveImage: () => setImage(""),
       onInboxBtn: () => setIsSentInbox(false),
     },
+    
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
@@ -147,8 +148,8 @@ export default function RecipeUI({user}: RecipeUIProps) {
         style={image ? { backgroundImage: `url('${image}')` } : undefined}
       >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
-          <Switch className="my-5" />
-          <Toaster position="bottom-center" />
+          {/* <Switch className="my-5" />
+          <Toaster position="bottom-center" /> */}
 
           {isElementVisible && (
             <>
@@ -174,9 +175,10 @@ export default function RecipeUI({user}: RecipeUIProps) {
                   isDarkMode={isDarkMode}
                 />
 
-                <Button id="submit" type="submit" disabled={isLoading}>
+                {/* <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
-                </Button>
+                </Button> */}
+                
               </Card>
             </>
           )}

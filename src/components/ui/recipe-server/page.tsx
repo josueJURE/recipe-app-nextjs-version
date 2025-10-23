@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import RecipeUI from "../recipe-ui/page";
+import RecipeUI from "../recipe-ui-client";
 
 export default async function RecipePage() {
   const session = await auth.api.getSession({
@@ -24,8 +24,7 @@ export default async function RecipePage() {
   console.log("user.name:", user?.name);
 
   //   return <RecipeUI name={session.user} />
-  return <RecipeUI user={user.name} />;
+  return <RecipeUI name={user.name} email={user.email}/>;
 }
 
-// #France1998
-// #Barcelona2025
+
