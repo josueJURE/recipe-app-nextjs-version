@@ -51,7 +51,6 @@ export default function RecipeUI(userProps: RecipeUIProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSentInbox, setIsSentInbox] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
-  // const [isSignedOut, setIsSignedOut] = useState<boolean>(false)
   const [selectedCountry, setSelectedCountry] = useState<string>("");
 
   const handleCountrySelect = (countryName: string) => {
@@ -61,7 +60,7 @@ export default function RecipeUI(userProps: RecipeUIProps) {
 
   const handleSignOut = () => {
     router.push("/sign-in")
-    // setIsSignedOut(true)
+ 
   }
 
   const folder = "mock"; // updateRecipe or mock to switch backend
