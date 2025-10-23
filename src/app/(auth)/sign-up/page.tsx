@@ -24,16 +24,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useRouter } from "next/navigation";
+
 //
 
 // import { PhoneInput } from '@/components/ui/phone-input'
 
 import { registerFormSchema } from "@/lib/validation-schemas";
 import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/dist/server/api-utils";
 
 const formSchema = registerFormSchema;
 
 export default function Register() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,6 +69,9 @@ export default function Register() {
           },
           onSuccess: (ctx) => {
             form.reset();
+
+            router.push("/sign-in"); // ✅ client-side redirect
+
             // redirect to the dashboard
           },
           onError: (ctx) => {
@@ -72,7 +80,7 @@ export default function Register() {
         }
       );
       console.log("values", values);
-      
+
       // toast(
       //   <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
       //     <code className="tex-white">{JSON.stringify(values, null, 2)}</code>
