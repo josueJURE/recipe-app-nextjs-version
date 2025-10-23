@@ -51,7 +51,7 @@ export default function RecipeUI(userProps: RecipeUIProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSentInbox, setIsSentInbox] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
-  const [isSignedOut, setIsSignedOut] = useState<boolean>(false)
+  // const [isSignedOut, setIsSignedOut] = useState<boolean>(false)
   const [selectedCountry, setSelectedCountry] = useState<string>("");
 
   const handleCountrySelect = (countryName: string) => {
@@ -61,7 +61,7 @@ export default function RecipeUI(userProps: RecipeUIProps) {
 
   const handleSignOut = () => {
     router.push("/sign-in")
-    setIsSignedOut(true)
+    // setIsSignedOut(true)
   }
 
   const folder = "mock"; // updateRecipe or mock to switch backend
@@ -98,6 +98,13 @@ export default function RecipeUI(userProps: RecipeUIProps) {
       onRemoveImage: () => setImage(""),
       onInboxBtn: () => setIsSentInbox(false),
     },
+    {
+      width: "w-60",
+      type: "button",
+      label: "Sign out",
+      onClick: () => handleSignOut(),
+      
+    },
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
@@ -106,7 +113,7 @@ export default function RecipeUI(userProps: RecipeUIProps) {
     }
     e.preventDefault();
 
-    if (!selectedCountry && !isSignedOut) {
+    if (!selectedCountry) {
       toast.error("Please select a country first!");
       return;
     }
@@ -202,7 +209,7 @@ export default function RecipeUI(userProps: RecipeUIProps) {
                  <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
                 </Button> 
-                <Button onClick={handleSignOut}>
+                <Button type="button" onClick={handleSignOut}>
                   Sign out
                 </Button>
               </Card>
@@ -289,8 +296,11 @@ export default function RecipeUI(userProps: RecipeUIProps) {
                 </CardContent>
               )}
             </Card>
+            
+          
           )}
         </div>
+       
       </form>
       {/* <LoginForm /> */}
     </main>
