@@ -16,6 +16,8 @@ import { useTheme } from "@/context/theme-context";
 import { Toaster, toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
+import { useRouter } from "next/navigation";
+
 interface RecipeUIProps {
   email: string;
   name: string;
@@ -37,6 +39,7 @@ const dietaryObject = {
 };
 
 export default function RecipeUI(userProps: RecipeUIProps) {
+  const router = useRouter()
   const [dietaryData, setDietaryData] =
     useState<DietaryDataType>(dietaryObject);
   const [resetKey, setResetKey] = useState(0);
@@ -48,11 +51,18 @@ export default function RecipeUI(userProps: RecipeUIProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSentInbox, setIsSentInbox] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
+  const [isSignedOut, setIsSignedOut] = useState<boolean>(false)
   const [selectedCountry, setSelectedCountry] = useState<string>("");
 
   const handleCountrySelect = (countryName: string) => {
     setSelectedCountry(countryName);
   };
+  
+
+  const handleSignOut = () => {
+    router.push("/sign-in")
+    setIsSignedOut(true)
+  }
 
   const folder = "mock"; // updateRecipe or mock to switch backend
 
@@ -96,7 +106,7 @@ export default function RecipeUI(userProps: RecipeUIProps) {
     }
     e.preventDefault();
 
-    if (!selectedCountry) {
+    if (!selectedCountry && !isSignedOut) {
       toast.error("Please select a country first!");
       return;
     }
@@ -189,8 +199,11 @@ export default function RecipeUI(userProps: RecipeUIProps) {
                   isDarkMode={isDarkMode}
                 />
 
-                <Button id="submit" type="submit" disabled={isLoading}>
+                 <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
+                </Button> 
+                <Button onClick={handleSignOut}>
+                  Sign out
                 </Button>
               </Card>
             </>

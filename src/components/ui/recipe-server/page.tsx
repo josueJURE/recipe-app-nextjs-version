@@ -24,7 +24,7 @@ export default async function RecipePage() {
   console.log("user.name:", user?.name);
 
   //   return <RecipeUI name={session.user} />
-  return <RecipeUI name={user.name} email={user.email}/>;
+  return <RecipeUI name={user.name} email={user.email} />;
 }
 
 
