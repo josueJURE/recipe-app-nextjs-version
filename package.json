@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start -p $PORT -H 0.0.0.0",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "email": "email dev --dir src/components/ui/Email"
   },
   "dependencies": {

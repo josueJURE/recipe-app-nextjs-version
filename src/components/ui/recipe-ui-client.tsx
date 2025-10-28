@@ -21,8 +21,6 @@ import { useRouter } from "next/navigation";
 interface RecipeUIProps {
   email: string;
   name: string;
-  
-  
 
   // id: string;
   // createdAt: Date;
@@ -39,7 +37,7 @@ const dietaryObject = {
 };
 
 export default function RecipeUI(userProps: RecipeUIProps) {
-  const router = useRouter()
+  const router = useRouter();
   const [dietaryData, setDietaryData] =
     useState<DietaryDataType>(dietaryObject);
   const [resetKey, setResetKey] = useState(0);
@@ -56,12 +54,10 @@ export default function RecipeUI(userProps: RecipeUIProps) {
   const handleCountrySelect = (countryName: string) => {
     setSelectedCountry(countryName);
   };
-  
 
   const handleSignOut = () => {
-    router.push("/sign-in")
- 
-  }
+    router.push("/sign-in");
+  };
 
   const folder = "mock"; // updateRecipe or mock to switch backend
 
@@ -102,7 +98,6 @@ export default function RecipeUI(userProps: RecipeUIProps) {
       type: "button",
       label: "Sign out",
       onClick: () => handleSignOut(),
-      
     },
   ];
 
@@ -176,10 +171,10 @@ export default function RecipeUI(userProps: RecipeUIProps) {
       >
         <div className="flex flex-col items-center w-full border-2 border-black-500 rounded-2xl h-screen">
           <Switch className="my-5" />
-          <div><div>Welcome Back {userProps.name}</div>
+          <div>
+            <div>Welcome Back {userProps.name}</div>
           </div>
           <Toaster position="bottom-center" />
-          
 
           {isElementVisible && (
             <>
@@ -205,9 +200,9 @@ export default function RecipeUI(userProps: RecipeUIProps) {
                   isDarkMode={isDarkMode}
                 />
 
-                 <Button id="submit" type="submit" disabled={isLoading}>
+                <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
-                </Button> 
+                </Button>
                 <Button type="button" onClick={handleSignOut}>
                   Sign out
                 </Button>
@@ -295,13 +290,9 @@ export default function RecipeUI(userProps: RecipeUIProps) {
                 </CardContent>
               )}
             </Card>
-            
-          
           )}
         </div>
-       
       </form>
-      {/* <LoginForm /> */}
     </main>
   );
 }

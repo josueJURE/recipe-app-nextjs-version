@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a Next.js 15 app using the App Router with TypeScript and Tailwind CSS.
 
 ### Authentication
+
 - Uses **better-auth** library with Prisma adapter
 - Email/password authentication enabled
 - Auth configuration in `src/lib/auth.ts` (server) and `src/lib/auth-client.ts` (client)
@@ -24,22 +25,26 @@ This is a Next.js 15 app using the App Router with TypeScript and Tailwind CSS.
 - Database-backed sessions with PostgreSQL
 
 ### Database
+
 - **Prisma ORM** with PostgreSQL
 - Schema located in `prisma/schema.prisma`
-- Generated client output: `src/generated/prisma/`
+- Generated client output: `@prisma/client`
 - Models: User, Session, Account, Verification (better-auth tables)
 - After schema changes, run: `npx prisma generate` and `npx prisma db push`
 
 ### Context Architecture
+
 - **ThemeProvider**: Manages dark mode state via `src/context/theme-context.tsx`. Wrapped around the entire app in layout.
 - **RecipeVariablesContext**: Manages recipe form state including country selection, dietary requirements, and special requests in `src/context/recipe-variables-context.tsx`. Handles API submission to `/api/updateRecipe`.
 
 ### API Routes
+
 - **`/api/updateRecipe`**: Generates traditional recipes via OpenAI API (gpt-3.5-turbo) with streaming responses. Also generates DALL-E 3 images based on recipes. Supports email delivery via Resend.
 - **`/api/auth/[...all]`**: better-auth catch-all route handler
 - **`/api/mock`**: Mock endpoint for testing
 
 ### UI Components
+
 - Built with **Radix UI** primitives (checkbox, label, switch, slot)
 - Custom components in `src/components/ui/`
 - Styled with **Tailwind CSS 4** and `class-variance-authority` for component variants
@@ -48,6 +53,7 @@ This is a Next.js 15 app using the App Router with TypeScript and Tailwind CSS.
 - Toast notifications via **sonner**
 
 ### Key Features
+
 - Interactive world map using **react-simple-maps** for country selection (`src/components/map.tsx`)
 - Dark mode toggle functionality
 - Recipe generation with streaming responses and AI-generated images
@@ -55,6 +61,7 @@ This is a Next.js 15 app using the App Router with TypeScript and Tailwind CSS.
 - Audio playback with **wavesurfer.js**
 
 ### Route Structure
+
 - `/` - Main recipe interface page
 - `/(auth)/sign-in` - Sign in page
 - `/(auth)/sign-up` - Sign up page
@@ -62,16 +69,20 @@ This is a Next.js 15 app using the App Router with TypeScript and Tailwind CSS.
 - `/recipe-ui` - Recipe UI page
 
 ### Environment Variables
+
 Required environment variables:
+
 - `DATABASE_URL` - PostgreSQL connection string
 - `OPENAI_API_KEY` - OpenAI API key for recipe generation
 - `RESEND_API_KEY` - Resend API key for email delivery
 
 ### Testing
+
 - **Playwright** for end-to-end testing
 - Test files in `tests/` directory
 - Example: `tests/updateRecipe.spec.ts` tests the recipe API endpoint
 - Run tests with `npm test` or `npm test:ui`
 
 ### Path Aliases
+
 - `@/*` maps to `./src/*` for cleaner imports

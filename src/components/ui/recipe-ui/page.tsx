@@ -25,7 +25,7 @@ interface RecipeUIProps {
   user: string;
 }
 
-export default function RecipeUI({user}: RecipeUIProps) {
+export default function RecipeUI({ user }: RecipeUIProps) {
   const [dietaryData, setDietaryData] =
     useState<DietaryDataType>(dietaryObject);
   const [resetKey, setResetKey] = useState(0);
@@ -44,7 +44,7 @@ export default function RecipeUI({user}: RecipeUIProps) {
   };
 
   const folder = "mock"; // updateRecipe or mock to switch backend
-  console.log("user-client-side",  user)
+  console.log("user-client-side", user);
 
   async function fetchData(
     url: string,
@@ -76,7 +76,6 @@ export default function RecipeUI({user}: RecipeUIProps) {
       onRemoveImage: () => setImage(""),
       onInboxBtn: () => setIsSentInbox(false),
     },
-    
   ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
@@ -178,7 +177,6 @@ export default function RecipeUI({user}: RecipeUIProps) {
                 {/* <Button id="submit" type="submit" disabled={isLoading}>
                   {isLoading ? "Loading..." : "Submit"}
                 </Button> */}
-                
               </Card>
             </>
           )}
@@ -266,7 +264,6 @@ export default function RecipeUI({user}: RecipeUIProps) {
           )}
         </div>
       </form>
-      {/* <LoginForm /> */}
     </main>
   );
 }
