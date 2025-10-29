@@ -10,21 +10,38 @@ test.beforeEach(async ({ page }: PageType) => {
 });
 
 test.describe("Home page", () => {
-  test("dear dev: should have correct metadata", async ({ page }: PageType) => {
-    await expect(page.locator('h1')).toHaveText(
-      "Unsure what to cook? Let recipe for success inspire your next meal from any country in the world"
-    );
+  test("should display sign in page", async ({ page }: PageType) => {
+    // The home page redirects to sign in, so we should see sign in elements
+    await expect(page.locator('h2')).toContainText(/sign in/i);
   });
 });
 
 
-test.describe("form", () => {
-  test("form should be displayed", async ({ page }: PageType) => {
-    // Wait for form to be visible
-    await page.waitForSelector("#form", { state: "visible" });
+test.describe("Recipe form", () => {
+  test("form should be displayed after authentication", async ({ page }: PageType) => {
+    // Sign up or sign in to access the recipe page
+    // First, try to sign up (or sign in if already exists)
+    await page.goto("http://localhost:3000/sign-up");
+
+    // Fill in sign up form
+    const testEmail = `test${Date.now()}@example.com`;
+    await page.fill('input[name="email"]', testEmail);
+    await page.fill('input[name="password"]', "TestPassword123!");
+    await page.fill('input[name="name"]', "Test User");
+
+    // Submit sign up form
+    await page.click('button[type="submit"]');
+
+    // Wait for navigation after sign up/sign in
+    await page.waitForURL(/recipe-ui/, { timeout: 10000 });
+
+    // Now we should be on the recipe page, wait for form to be visible
+    await page.waitForSelector("#form", { state: "visible", timeout: 10000 });
     await expect(page.locator("#form")).toBeVisible();
 
     // Verify form elements exist
     await expect(page.locator("#submit")).toBeVisible();
   });
 });
+
+
