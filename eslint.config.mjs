@@ -16,6 +16,10 @@ const eslintConfig = [
       "@typescript-eslint/no-unused-vars": "warn",
     },
   },
+  {
+    // Ignore generated Prisma client files
+    ignores: ["src/generated/**/*"],
+  },
 ];
 
 export default eslintConfig;
